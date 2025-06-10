@@ -1,0 +1,12 @@
+# Ignore build and debug files
+bin/
+obj/
+*.suo
+*.user
+*.cache
+*.log
+
+# Ignore Visual Studio temporary files, build results, and other unnecessary files.
+.vs/
+*.pdb
+[Tt]emp[/]
