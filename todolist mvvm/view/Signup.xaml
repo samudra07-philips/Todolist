@@ -23,6 +23,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        
         <TextBox Name="textboxsignup" 
          Grid.Row="1" 
          Margin="5"
@@ -30,24 +31,21 @@
          GotFocus="RemoveText" 
          LostFocus="AddText"
          TextChanged="textboxsignup_TextChanged" Grid.ColumnSpan="4" Width="320" />
+        
+        <PasswordBox Name="passboxsignup" Width="320" Margin="5" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"
+        PasswordChanged="passboxsignup_PasswordChanged" GotFocus="passboxsignup_GotFocus" LostFocus="passboxsignup_LostFocus" />
 
-        <TextBox Name="passboxsignup" 
-         Grid.Row="2"
-         Grid.ColumnSpan="4"
-         Margin="5"
-         Text="Enter your password" 
-         GotFocus="RemoveText" 
-         LostFocus="AddText"
-         TextChanged="passboxsignup_TextChanged" Width="320"/>
-        <TextBox Name="checkpassboxsignup" 
- Grid.Row="3"
- Grid.ColumnSpan="4"
- Margin="5"
- Text="Confirm your password" 
- GotFocus="RemoveText" 
- LostFocus="AddText"
- TextChanged="checkpassboxsignup_TextChanged" Width="320"/>
-
+        <TextBlock Name="passwordPlaceholder"
+        Text="           Enter your password"
+        Foreground="Gray"
+        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+        Margin="5"
+        IsHitTestVisible="False"
+        Visibility="Visible" />
+        <PasswordBox Name="checkpassboxsignup" Width="320" Margin="5" Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="0"
+        PasswordChanged="checkpassboxsignup_PasswordChanged" GotFocus="checkpassboxsignup_GotFocus" 
+        LostFocus="checkpassboxsignup_LostFocus" />
+        
         <Button Name="SignUp" 
         Content=" Sign Up "
         Grid.Row="4" Grid.Column="1"

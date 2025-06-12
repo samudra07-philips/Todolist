@@ -9,16 +9,17 @@
     <Grid>
   
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="10*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -32,7 +33,7 @@
                  TextChanged="textboxsample_TextChanged" Grid.ColumnSpan="4" Width="320" />
 
         <PasswordBox Name="passboxsample" Width="320" Margin="5" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"
-                      PasswordChanged="passboxsample_TextChanged" GotFocus="passboxsample_GotFocus" LostFocus="passboxsample_LostFocus" />
+                      PasswordChanged="passboxsample_PasswordChanged" GotFocus="passboxsample_GotFocus" LostFocus="passboxsample_LostFocus" />
         <TextBlock Name="passwordPlaceholder"
                Text="                        Enter your password"
                Foreground="Gray"
@@ -40,15 +41,14 @@
                Margin="5"
                IsHitTestVisible="False"
                Visibility="Visible" />
-        <Button Name="SignUp" 
-                Content=" Sign Up "
-                Grid.Row="3" Grid.Column="1"
-                Margin="20,10,30,0" 
-                Click="Signedup" />
-
+        <TextBlock Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="8"><Run Text="     New user?" />
+        <Hyperlink Click="Signedup">
+             <Run Text="Sign Up" />
+        </Hyperlink>
+        </TextBlock>
         <Button Name="Login"
-                Content=" Login "
-                Grid.Row="3" Grid.Column="2"
+                Content="Login"
+                Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Width="50"
                 Margin="30,10,20,0"
                 Click="Logedin" />
     </Grid>

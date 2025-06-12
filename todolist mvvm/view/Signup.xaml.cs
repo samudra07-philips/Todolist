@@ -29,27 +29,63 @@ namespace todolist_mvvm.view
         {
 
         }
+        private void passboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
+        {
 
-        private void passboxsignup_TextChanged(object sender, TextChangedEventArgs e)
+        }
+        private void passboxsignup_GotFocus(object sender, RoutedEventArgs e)
+        {
+            passwordPlaceholder.Visibility = Visibility.Hidden;
+        }
+
+        private void passboxsignup_LostFocus(object sender, RoutedEventArgs e)
+        {
+            passwordPlaceholder.Visibility = string.IsNullOrEmpty(passboxsignup.Password)
+                  ? Visibility.Visible : Visibility.Hidden;
+        }
+        private void checkpassboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void checkpassboxsignup_TextChanged(object sender, TextChangedEventArgs e)
+        private void checkpassboxsignup_GotFocus(object sender, RoutedEventArgs e)
         {
 
         }
 
+        private void checkpassboxsignup_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Your account has been successfully created!\n Please log in to your acount!", "Account Created", MessageBoxButton.OK, MessageBoxImage.Information);
-            if (this.NavigationService != null)
+            if (textboxsignup.Text == "Enter your name" || passboxsignup.Password=="" || checkpassboxsignup.Password=="")
             {
-                this.NavigationService.Navigate(new LoginPage());
+                MessageBox.Show("Invalid Credentials! Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            else if (Application.Current.MainWindow is Mainwindow mainWindow)
+            
+            if (passboxsignup.Password == checkpassboxsignup.Password)
             {
-                mainWindow.MainFrame.Navigate(new LoginPage());
+                MessageBox.Show("Your account has been successfully created!\n Please log in to your acount!", "Account Created", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (this.NavigationService != null)
+                {
+                    this.NavigationService.Navigate(new LoginPage());
+                }
+                else if (Application.Current.MainWindow is Mainwindow mainWindow)
+                {
+                    mainWindow.MainFrame.Navigate(new LoginPage());
+                }
+            }
+            else if (passboxsignup.Password != checkpassboxsignup.Password)
+            {
+                MessageBox.Show("Passwords do not match!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+            }
+            else
+            {
+                MessageBox.Show("Invalid Credentials", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
         }
         private void RemoveText(object sender, RoutedEventArgs e)
@@ -79,5 +115,7 @@ namespace todolist_mvvm.view
                 }
             }
         }
+
+
     }
 }

@@ -29,12 +29,22 @@ namespace todolist_mvvm.view
         {
          
         }
-
-        private void passboxsample_TextChanged(object sender, RoutedEventArgs e)
+        private void passboxsample_PasswordChanged(object sender, RoutedEventArgs e)
         {
 
         }
 
+        private void passboxsample_GotFocus(object sender, RoutedEventArgs e)
+        {
+            passwordPlaceholder.Visibility = Visibility.Hidden;
+        }
+
+        private void passboxsample_LostFocus(object sender, RoutedEventArgs e)
+        {
+            passwordPlaceholder.Visibility = string.IsNullOrEmpty(passboxsample.Password)
+                  ? Visibility.Visible : Visibility.Hidden;
+
+        }
         private void Signedup(object sender, RoutedEventArgs e)
         {
           
@@ -70,16 +80,6 @@ namespace todolist_mvvm.view
             }
         }
 
-        private void passboxsample_GotFocus(object sender, RoutedEventArgs e)
-        {
-            passwordPlaceholder.Visibility = Visibility.Hidden;
-        }
 
-        private void passboxsample_LostFocus(object sender, RoutedEventArgs e)
-        {
-            passwordPlaceholder.Visibility = string.IsNullOrEmpty(passboxsample.Password)
-                  ? Visibility.Visible : Visibility.Hidden;
-
-        }
     }
 }
