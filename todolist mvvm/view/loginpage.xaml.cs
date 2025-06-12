@@ -12,14 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using todolist_mvvm.viewmodel;
 
 namespace todolist_mvvm.view
 {
     /// <summary>
     /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class LoginPage : Page,IRefreshablePage
     {
+        public void RefreshContent()
+        {
+            textboxsample.Text = string.Empty;
+            passboxsample.Password = string.Empty;
+            
+        }
         public LoginPage()
         {
             InitializeComponent();
@@ -27,59 +34,36 @@ namespace todolist_mvvm.view
 
         private void textboxsample_TextChanged(object sender, TextChangedEventArgs e)
         {
-         
+            if (textboxsample.Text.Length == 0) textboxsample.Background.Opacity = 1;
+            else textboxsample.Background.Opacity = 0;
         }
         private void passboxsample_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            if (passboxsample.Password.Length == 0)
+                passboxsample.Background.Opacity = 1;
+            else
+                passboxsample.Background.Opacity = 0;
         }
 
-        private void passboxsample_GotFocus(object sender, RoutedEventArgs e)
-        {
-            passwordPlaceholder.Visibility = Visibility.Hidden;
-        }
-
-        private void passboxsample_LostFocus(object sender, RoutedEventArgs e)
-        {
-            passwordPlaceholder.Visibility = string.IsNullOrEmpty(passboxsample.Password)
-                  ? Visibility.Visible : Visibility.Hidden;
-
-        }
+       
         private void Signedup(object sender, RoutedEventArgs e)
         {
-          
+            
             this.NavigationService.Navigate(new Signup());
+            
 
         }
 
         private void Logedin(object sender, RoutedEventArgs e)
+
         {
+            if (string.IsNullOrEmpty(textboxsample.Text) || string.IsNullOrEmpty(passboxsample.Password))
+            {
+                MessageBox.Show("Invalid Credentials! Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             this.NavigationService.Navigate(new Todo());
         }
-        private void RemoveText(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (textBox.Text == "Enter your name" || textBox.Text == "Enter your password")
-            {
-                textBox.Text = "";
-            }
-        }
-        private void AddText(object sender, RoutedEventArgs e)
-        {  
-            TextBox textBox = (TextBox)sender;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                if (textBox.Name == "textboxsample")
-                {
-                    textBox.Text = "Enter your name";
-                }
-                else if (textBox.Name == "passboxsample")
-                {
-                    textBox.Text = "Enter your password";
-                }
-            }
-        }
-
 
     }
 }

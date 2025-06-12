@@ -7,8 +7,13 @@
         mc:Ignorable="d"
         Title="To Do List" Height="600" Width="600" MinHeight="400" MinWidth="400">
     <Grid >
-        <Button Name="back" Content="&lt; Back" Click="Back_Click" Grid.Row="0" Grid.Column="0" Margin="10" Background="Transparent" FontSize="20" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="Arial Rounded MT Bold"/>
+        <Button Name="back" Click="Back_Click" Grid.Row="0" Grid.Column="0" Margin="10" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="30">
+            <Image Source="/Assets/Images/back-button-interface-icon-illustration-vector.jpg" Stretch="Uniform"/>
+        </Button>
+        <Button Name="Refresh" Click="Refresh_Click" Grid.Row="0" Grid.Column="0" Margin="40,10,10,10" Background="Transparent" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="30">
+            <Image Source="/Assets/Images/refresh-button-icon-17.jpg" Stretch="Uniform"/>
+        </Button>
 
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,40,0,0" />
+        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="100" />
     </Grid>
 </Window>

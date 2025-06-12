@@ -4,6 +4,86 @@
              xmlns:local="clr-namespace:todolist_mvvm"
              StartupUri="mainwindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <VisualBrush x:Key="PasswordHint" Stretch="None" Opacity="1"  >
+                <VisualBrush.Visual>
+                    <TextBlock Text=" ENTER YOUR PASSWORD" 
+                               FontSize="15"
+                               FontWeight="Light"
+                               Foreground="Gray"
+                               
+                              />
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="Textwatermark" Stretch="None" Opacity="1"  >
+                <VisualBrush.Visual>
+                    <TextBlock Text=" ENTER YOUR NAME" 
+                       FontSize="15"
+                       FontWeight="Light"
+                       Foreground="Gray"
+                       
+                      />
+                </VisualBrush.Visual>
+            </VisualBrush>
+            
+            <VisualBrush x:Key="confirmpass" Stretch="None" Opacity="1"  >
+                <VisualBrush.Visual>
+                    <TextBlock Text="CONFIRM YOUR PASSWORD" 
+           FontSize="15"
+           FontWeight="Light"
+           Foreground="Gray"
+           
+          />
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <Style x:Key="Rounded3DButtonStyle" TargetType="Button">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Padding" Value="8,4"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="10" 
+                                BorderBrush="Gray" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                                <!-- Applying the OpacityMask directly to the Border -->
+                                <Border.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="LightGray" Offset="0"/>
+                                        <GradientStop Color="Black" Offset="0.5"/>
+                                    </LinearGradientBrush>
+                                </Border.OpacityMask>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#DDDDDD" Offset="0"/>
+                            <GradientStop Color="#AAAAAA" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <!-- Hover effect trigger -->
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="#CCCCCC" Offset="0"/>
+                                    <GradientStop Color="#888888" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

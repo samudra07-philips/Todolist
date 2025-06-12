@@ -12,54 +12,48 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using todolist_mvvm.viewmodel;
 
 namespace todolist_mvvm.view
 {
     /// <summary>
     /// Interaction logic for Signup.xaml
     /// </summary>
-    public partial class Signup : Page
+    public partial class Signup : Page,IRefreshablePage
     {
         public Signup()
         {
             InitializeComponent();
         }
-
+        public void RefreshContent()
+        {
+            textboxsignup.Text = string.Empty;
+            passboxsignup.Password = string.Empty;
+            checkpassboxsignup.Password = string.Empty;
+        }
         private void textboxsignup_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (string.IsNullOrEmpty(textboxsignup.Text)) textboxsignup.Background.Opacity = 1;
+            else textboxsignup.Background.Opacity = 0;
 
         }
         private void passboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
-        }
-        private void passboxsignup_GotFocus(object sender, RoutedEventArgs e)
-        {
-            passwordPlaceholder.Visibility = Visibility.Hidden;
-        }
-
-        private void passboxsignup_LostFocus(object sender, RoutedEventArgs e)
-        {
-            passwordPlaceholder.Visibility = string.IsNullOrEmpty(passboxsignup.Password)
-                  ? Visibility.Visible : Visibility.Hidden;
+            if (passboxsignup.Password.Length == 0)
+               passboxsignup.Background.Opacity = 1;
+            else
+                passboxsignup.Background.Opacity = 0;
         }
         private void checkpassboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void checkpassboxsignup_GotFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void checkpassboxsignup_LostFocus(object sender, RoutedEventArgs e)
-        {
-
+            if (checkpassboxsignup.Password.Length == 0)
+                checkpassboxsignup.Background.Opacity = 1;
+            else
+               checkpassboxsignup.Background.Opacity = 0;
         }
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            if (textboxsignup.Text == "Enter your name" || passboxsignup.Password=="" || checkpassboxsignup.Password=="")
+            if (string.IsNullOrEmpty(textboxsignup.Text) || string.IsNullOrEmpty(passboxsignup.Password) || string.IsNullOrEmpty(checkpassboxsignup.Password))
             {
                 MessageBox.Show("Invalid Credentials! Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -88,34 +82,8 @@ namespace todolist_mvvm.view
 
             }
         }
-        private void RemoveText(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (textBox.Text == "Enter your name" || textBox.Text == "Enter your password"|| textBox.Text == "Confirm your password")
-            {
-                textBox.Text = "";
-            }
-        }
-        private void AddText(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                if (textBox.Name == "textboxsignup")
-                {
-                    textBox.Text = "Enter your name";
-                }
-                else if (textBox.Name == "passboxsignup")
-                {
-                    textBox.Text = "Enter your password";
-                }
-                else if (textBox.Name == "checkpassboxsignup")
-                {
-                    textBox.Text = "Confirm your password";
-                }
-            }
-        }
+       }
 
 
-    }
 }
+

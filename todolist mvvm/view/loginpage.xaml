@@ -25,30 +25,29 @@
         </Grid.ColumnDefinitions>
 
         <TextBox Name="textboxsample" 
-                 Grid.Row="1" 
-                 Margin="5"
-                 Text="Enter your name"
-                 GotFocus="RemoveText" 
-                 LostFocus="AddText"
-                 TextChanged="textboxsample_TextChanged" Grid.ColumnSpan="4" Width="320" />
-
-        <PasswordBox Name="passboxsample" Width="320" Margin="5" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"
-                      PasswordChanged="passboxsample_PasswordChanged" GotFocus="passboxsample_GotFocus" LostFocus="passboxsample_LostFocus" />
-        <TextBlock Name="passwordPlaceholder"
-               Text="                        Enter your password"
-               Foreground="Gray"
-               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
-               Margin="5"
-               IsHitTestVisible="False"
-               Visibility="Visible" />
-        <TextBlock Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="8"><Run Text="     New user?" />
-        <Hyperlink Click="Signedup">
+                 Grid.Row="1"
+                 HorizontalContentAlignment="Center"
+                 Margin=" 0,10,0,10"
+                 Height="40"
+                 Padding="8"
+                 FontSize="15"
+                 FontStretch="ExtraExpanded"
+                 FontWeight="DemiBold"         
+                 TextChanged="textboxsample_TextChanged" Grid.ColumnSpan="4" Width="Auto" TextWrapping="Wrap" MinWidth="140" MaxWidth="500" Background="{StaticResource Textwatermark}" />
+    
+        <PasswordBox Name="passboxsample" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0" Width="Auto" MinWidth="140" MaxWidth="500" Margin=" 0,10,0,10" Background="{StaticResource PasswordHint}" 
+                 HorizontalContentAlignment="Center"   Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Height="40" PasswordChanged="passboxsample_PasswordChanged" />
+        
+        <TextBlock Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center"   Padding="8" FontSize="12" FontStretch="ExtraExpanded" FontWeight="Medium"><Run Text="     New User?" />
+        <Hyperlink Click="Signedup" FontSize="12" FontStretch="ExtraExpanded" FontWeight="ExtraBold">
              <Run Text="Sign Up" />
         </Hyperlink>
         </TextBlock>
         <Button Name="Login"
                 Content="Login"
-                Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Width="50"
+                FontSize="12"
+                FontWeight="DemiBold"
+                Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Width="60" Height=" 30" Style="{StaticResource Rounded3DButtonStyle}"
                 Margin="30,10,20,0"
                 Click="Logedin" />
     </Grid>

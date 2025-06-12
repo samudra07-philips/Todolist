@@ -25,29 +25,24 @@
         </Grid.ColumnDefinitions>
         
         <TextBox Name="textboxsignup" 
-         Grid.Row="1" 
-         Margin="5"
-         Text="Enter your name"
-         GotFocus="RemoveText" 
-         LostFocus="AddText"
-         TextChanged="textboxsignup_TextChanged" Grid.ColumnSpan="4" Width="320" />
-        
-        <PasswordBox Name="passboxsignup" Width="320" Margin="5" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"
-        PasswordChanged="passboxsignup_PasswordChanged" GotFocus="passboxsignup_GotFocus" LostFocus="passboxsignup_LostFocus" />
+         Grid.Row="1"
+         HorizontalContentAlignment="Center"
+         Background="{StaticResource Textwatermark}"
+         Margin="0,10,0,10"
+         TextChanged="textboxsignup_TextChanged" Grid.ColumnSpan="4" Width="Auto" TextWrapping="Wrap" MinWidth="140" MaxWidth="500"  Padding="5" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" />
 
-        <TextBlock Name="passwordPlaceholder"
-        Text="           Enter your password"
-        Foreground="Gray"
-        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
-        Margin="5"
-        IsHitTestVisible="False"
-        Visibility="Visible" />
-        <PasswordBox Name="checkpassboxsignup" Width="320" Margin="5" Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="0"
-        PasswordChanged="checkpassboxsignup_PasswordChanged" GotFocus="checkpassboxsignup_GotFocus" 
-        LostFocus="checkpassboxsignup_LostFocus" />
+        <PasswordBox Name="passboxsignup" Width="Auto"  MinWidth="140" MaxWidth="500" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"  Margin="0,10,0,10"
+        PasswordChanged="passboxsignup_PasswordChanged"   Padding="5" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource PasswordHint}" HorizontalContentAlignment="Center" />
+
+        <PasswordBox Name="checkpassboxsignup" Width="Auto"  MinWidth="140" MaxWidth="500" Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="0"  Margin="0,10,0,10"
+        PasswordChanged="checkpassboxsignup_PasswordChanged"  Padding="5" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource confirmpass}" HorizontalContentAlignment="Center"/>
         
         <Button Name="SignUp" 
+                Style="{StaticResource Rounded3DButtonStyle}"
         Content=" Sign Up "
+        Height="30" Width="60"
+                 FontSize="12"
+          FontWeight="DemiBold"
         Grid.Row="4" Grid.Column="1"
         Margin="20,10,30,0" 
         Click="SignUp_Click" />

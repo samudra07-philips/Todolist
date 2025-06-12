@@ -59,6 +59,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="viewmodel\Irefreshinterface.cs" />
     <Compile Include="view\loginpage.xaml.cs">
       <DependentUpon>loginpage.xaml</DependentUpon>
     </Compile>
@@ -100,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="model\" />
-    <Folder Include="viewmodel\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="mainwindow.xaml">
@@ -119,6 +119,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\back-button-interface-icon-illustration-vector.jpg" />
+    <Resource Include="Assets\Images\refresh-button-icon-17.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

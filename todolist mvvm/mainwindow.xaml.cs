@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using todolist_mvvm.view;
+using todolist_mvvm.viewmodel;
 
 namespace todolist_mvvm
 {
@@ -27,7 +28,17 @@ namespace todolist_mvvm
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+           
             if (MainFrame.CanGoBack) { MainFrame.GoBack(); }
+            
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.Content is IRefreshablePage refreshablePage)
+            {
+                refreshablePage.RefreshContent();
+            }
         }
     }
 }
