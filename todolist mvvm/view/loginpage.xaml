@@ -18,8 +18,8 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -31,23 +31,23 @@
                  LostFocus="AddText"
                  TextChanged="textboxsample_TextChanged" Grid.ColumnSpan="4" Width="320" />
 
-        <TextBox Name="passboxsample" 
-                 Grid.Row="2"
-                 Grid.ColumnSpan="4"
-                 Margin="5"
-                 Text="Enter your password" 
-                 GotFocus="RemoveText" 
-                 LostFocus="AddText"
-                 TextChanged="passboxsample_TextChanged" Width="320"/>
-
+        <PasswordBox Name="passboxsample" Width="320" Margin="5" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"
+                      PasswordChanged="passboxsample_TextChanged" GotFocus="passboxsample_GotFocus" LostFocus="passboxsample_LostFocus" />
+        <TextBlock Name="passwordPlaceholder"
+               Text="                        Enter your password"
+               Foreground="Gray"
+               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+               Margin="5"
+               IsHitTestVisible="False"
+               Visibility="Visible" />
         <Button Name="SignUp" 
-                Content="Sign Up"
+                Content=" Sign Up "
                 Grid.Row="3" Grid.Column="1"
                 Margin="20,10,30,0" 
                 Click="Signedup" />
 
         <Button Name="Login"
-                Content="Login"
+                Content=" Login "
                 Grid.Row="3" Grid.Column="2"
                 Margin="30,10,20,0"
                 Click="Logedin" />

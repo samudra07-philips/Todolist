@@ -32,12 +32,14 @@ namespace todolist_mvvm.view
 
         private void passboxsample_TextChanged(object sender, RoutedEventArgs e)
         {
-          
+
         }
 
         private void Signedup(object sender, RoutedEventArgs e)
         {
-           
+          
+            this.NavigationService.Navigate(new Signup());
+
         }
 
         private void Logedin(object sender, RoutedEventArgs e)
@@ -53,7 +55,7 @@ namespace todolist_mvvm.view
             }
         }
         private void AddText(object sender, RoutedEventArgs e)
-        {
+        {  
             TextBox textBox = (TextBox)sender;
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
@@ -66,6 +68,18 @@ namespace todolist_mvvm.view
                     textBox.Text = "Enter your password";
                 }
             }
+        }
+
+        private void passboxsample_GotFocus(object sender, RoutedEventArgs e)
+        {
+            passwordPlaceholder.Visibility = Visibility.Hidden;
+        }
+
+        private void passboxsample_LostFocus(object sender, RoutedEventArgs e)
+        {
+            passwordPlaceholder.Visibility = string.IsNullOrEmpty(passboxsample.Password)
+                  ? Visibility.Visible : Visibility.Hidden;
+
         }
     }
 }

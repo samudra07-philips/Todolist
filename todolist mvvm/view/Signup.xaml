@@ -1,0 +1,58 @@
+﻿<Page x:Class="todolist_mvvm.view.Signup"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:todolist_mvvm.view"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Signup">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBox Name="textboxsignup" 
+         Grid.Row="1" 
+         Margin="5"
+         Text="Enter your name"
+         GotFocus="RemoveText" 
+         LostFocus="AddText"
+         TextChanged="textboxsignup_TextChanged" Grid.ColumnSpan="4" Width="320" />
+
+        <TextBox Name="passboxsignup" 
+         Grid.Row="2"
+         Grid.ColumnSpan="4"
+         Margin="5"
+         Text="Enter your password" 
+         GotFocus="RemoveText" 
+         LostFocus="AddText"
+         TextChanged="passboxsignup_TextChanged" Width="320"/>
+        <TextBox Name="checkpassboxsignup" 
+ Grid.Row="3"
+ Grid.ColumnSpan="4"
+ Margin="5"
+ Text="Confirm your password" 
+ GotFocus="RemoveText" 
+ LostFocus="AddText"
+ TextChanged="checkpassboxsignup_TextChanged" Width="320"/>
+
+        <Button Name="SignUp" 
+        Content=" Sign Up "
+        Grid.Row="4" Grid.Column="1"
+        Margin="20,10,30,0" 
+        Click="SignUp_Click" />
+
+    </Grid>
+</Page>
