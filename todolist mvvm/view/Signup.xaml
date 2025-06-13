@@ -29,13 +29,13 @@
          HorizontalContentAlignment="Center"
          Background="{StaticResource Textwatermark}"
          Margin="0,10,0,10"
-         TextChanged="textboxsignup_TextChanged" Grid.ColumnSpan="4" Width="Auto" TextWrapping="Wrap" MinWidth="140" MaxWidth="500"  Padding="5" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" />
+         TextChanged="textboxsignup_TextChanged" Grid.ColumnSpan="4" Width="Auto" TextWrapping="Wrap" MinWidth="140" MaxWidth="500"  Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" />
 
         <PasswordBox Name="passboxsignup" Width="Auto"  MinWidth="140" MaxWidth="500" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"  Margin="0,10,0,10"
-        PasswordChanged="passboxsignup_PasswordChanged"   Padding="5" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource PasswordHint}" HorizontalContentAlignment="Center" />
+        PasswordChanged="passboxsignup_PasswordChanged"   Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource PasswordHint}" HorizontalContentAlignment="Center" />
 
         <PasswordBox Name="checkpassboxsignup" Width="Auto"  MinWidth="140" MaxWidth="500" Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="0"  Margin="0,10,0,10"
-        PasswordChanged="checkpassboxsignup_PasswordChanged"  Padding="5" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource confirmpass}" HorizontalContentAlignment="Center"/>
+        PasswordChanged="checkpassboxsignup_PasswordChanged"  Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource confirmpass}" HorizontalContentAlignment="Center"/>
         
         <Button Name="SignUp" 
                 Style="{StaticResource Rounded3DButtonStyle}"

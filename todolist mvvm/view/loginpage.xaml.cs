@@ -16,7 +16,7 @@ using todolist_mvvm.viewmodel;
 
 namespace todolist_mvvm.view
 {
-    /// <summary>
+    ///<summary>
     /// Interaction logic for LoginPage.xaml
     /// </summary>
     public partial class LoginPage : Page,IRefreshablePage

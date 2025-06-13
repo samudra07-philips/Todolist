@@ -12,13 +12,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Welcome to the Todo Page!" 
-                   Grid.ColumnSpan="2" Grid.Row="1"
+                   Grid.ColumnSpan="3" Grid.Row="1"
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    FontSize="24" />
+        <Button Name="addtask" Click="addtask_Click" Height="50" Grid.ColumnSpan="3" Width="50" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0" Background="Transparent" BorderThickness="0">
+            <Image Source="/Assets/Images/addbutton.png" Stretch="Uniform"/>
+        </Button>
     </Grid>
 </Page>

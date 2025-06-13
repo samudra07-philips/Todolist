@@ -60,6 +60,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="viewmodel\Irefreshinterface.cs" />
+    <Compile Include="view\Addtaskwindow.xaml.cs">
+      <DependentUpon>Addtaskwindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\loginpage.xaml.cs">
       <DependentUpon>loginpage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\Addtaskwindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\loginpage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +130,17 @@
   <ItemGroup>
     <Resource Include="Assets\Images\back-button-interface-icon-illustration-vector.jpg" />
     <Resource Include="Assets\Images\refresh-button-icon-17.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\addbutton.png" />
+    <Resource Include="Assets\Images\delete.jpg" />
+    <Resource Include="Assets\Images\edit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\light-blue-green-background-with-curves-vector.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\bg.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
