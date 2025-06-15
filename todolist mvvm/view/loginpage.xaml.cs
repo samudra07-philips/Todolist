@@ -34,12 +34,14 @@ namespace todolist_mvvm.view
 
         private void textboxsample_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (textboxsample.Text.Length == 0) textboxsample.Background.Opacity = 1;
-            else textboxsample.Background.Opacity = 0;
+            if (string.IsNullOrEmpty(textboxsample.Text)) 
+                textboxsample.Background.Opacity = 1;
+            else 
+                textboxsample.Background.Opacity = 0;
         }
         private void passboxsample_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (passboxsample.Password.Length == 0)
+            if (string.IsNullOrEmpty(passboxsample.Password))
                 passboxsample.Background.Opacity = 1;
             else
                 passboxsample.Background.Opacity = 0;
@@ -50,6 +52,7 @@ namespace todolist_mvvm.view
         {
             
             this.NavigationService.Navigate(new Signup());
+
             
 
         }

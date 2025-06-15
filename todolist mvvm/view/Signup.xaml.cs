@@ -33,20 +33,22 @@ namespace todolist_mvvm.view
         }
         private void textboxsignup_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(textboxsignup.Text)) textboxsignup.Background.Opacity = 1;
-            else textboxsignup.Background.Opacity = 0;
+            if (string.IsNullOrEmpty(textboxsignup.Text))
+                textboxsignup.Background.Opacity = 1;
+            else
+                textboxsignup.Background.Opacity = 0;
 
         }
         private void passboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (passboxsignup.Password.Length == 0)
+            if (string.IsNullOrEmpty(passboxsignup.Password))
                passboxsignup.Background.Opacity = 1;
             else
                 passboxsignup.Background.Opacity = 0;
         }
         private void checkpassboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (checkpassboxsignup.Password.Length == 0)
+            if (string.IsNullOrEmpty(checkpassboxsignup.Password))
                 checkpassboxsignup.Background.Opacity = 1;
             else
                checkpassboxsignup.Background.Opacity = 0;

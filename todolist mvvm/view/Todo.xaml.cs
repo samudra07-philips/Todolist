@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using todolist_mvvm.viewmodel;
 
 namespace todolist_mvvm.view
 {
@@ -33,6 +34,10 @@ namespace todolist_mvvm.view
             double t=m.Top+(m.Height-a.Height)/2;
             a.Left = l;
             a.Top = t;
+            if(a.Content is IRefreshablePage)
+            {
+                a.RefreshContent();
+            }
             a.ShowDialog();
         }
 

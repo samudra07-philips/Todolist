@@ -29,13 +29,13 @@
                  Grid.ColumnSpan="4"
                  Background="{StaticResource Textwatermark}"
                  Style="{StaticResource CustomTextBox}"
-                 TextChanged="textboxsample_TextChanged"   />
+                 TextChanged="textboxsample_TextChanged"/>
     
         <PasswordBox Name="passboxsample"
                      Grid.Row="2" Grid.ColumnSpan="4" 
                      Background="{StaticResource PasswordHint}" 
                      Style="{StaticResource CustomPasswordBox}"
-                     PasswordChanged="passboxsample_PasswordChanged" />
+                     PasswordChanged="passboxsample_PasswordChanged"/>
         
         <TextBlock Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center"   Padding="8" FontSize="12" FontStretch="ExtraExpanded" FontWeight="Medium"><Run Text="     New User?" />
         <Hyperlink Click="Signedup" FontSize="12" FontStretch="ExtraExpanded" FontWeight="ExtraBold">

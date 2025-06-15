@@ -28,9 +28,10 @@ namespace todolist_mvvm
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-           
+            
             if (MainFrame.CanGoBack) { MainFrame.GoBack(); }
             
+
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)

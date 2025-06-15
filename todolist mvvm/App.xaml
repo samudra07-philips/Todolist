@@ -28,7 +28,40 @@
                       />
                 </VisualBrush.Visual>
             </VisualBrush>
+            <VisualBrush x:Key="addtaskwatermark" Stretch="None" Opacity="1"  >
+                <VisualBrush.Visual>
+                    <TextBlock Text=" ENTER TASK NAME" 
+            FontSize="15"
+            FontWeight="Light"
+            Foreground="Gray"
             
+           />
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="Descriptionwatermark" Stretch="None" Opacity="1">
+                <VisualBrush.Visual>
+                 
+                        <TextBlock Text="DESCRIPTION..." 
+                               FontSize="15"
+                               FontWeight="Light"
+                               Foreground="Gray"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                                />
+                 
+                </VisualBrush.Visual>
+            </VisualBrush>
+            <VisualBrush x:Key="Textwatermark1" Stretch="None" Opacity="1"  >
+                <VisualBrush.Visual>
+                    <TextBlock Text=" ENTER YOUR NAME" 
+           FontSize="15"
+           FontWeight="Light"
+           Foreground="Gray"
+           
+          />
+                </VisualBrush.Visual>
+            </VisualBrush>
+
             <VisualBrush x:Key="confirmpass" Stretch="None" Opacity="1"  >
                 <VisualBrush.Visual>
                     <TextBlock Text="CONFIRM YOUR PASSWORD" 
@@ -50,8 +83,9 @@
                 <Setter Property="Width" Value="Auto"/>
                 <Setter Property="MinWidth" Value="140"/>
                 <Setter Property="MaxWidth" Value="500"/>
+                
             </Style>
-            <Style x:Key="CustomTextBox" TargetType="TextBox" BasedOn="{StaticResource Custombox}"/>
+            <Style x:Key="CustomTextBox" TargetType="TextBox" BasedOn="{StaticResource Custombox}" />
             <Style x:Key="CustomPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource Custombox}"/>
 
             <Style x:Key="Rounded3DButtonStyle" TargetType="Button">

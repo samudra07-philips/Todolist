@@ -8,6 +8,45 @@
         Icon="/Assets/Images/edit.jpg"
         Title="Add New Task" Height="400" Width="600" MinHeight="400" MinWidth="400">
     <Grid Background="{StaticResource bgimage}">
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Name="Taskname"
+                 Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 TextWrapping="Wrap"
+                 Style="{StaticResource CustomTextBox}"
+                 Background="{StaticResource addtaskwatermark}"
+                 TextChanged="Taskname_TextChanged"/>
+        <TextBox Name="Add_descripton"
+                 Grid.Row="2"
+                 Grid.ColumnSpan="3"
+                 Style="{StaticResource CustomTextBox}"
+                 Height="Auto"
+                 TextWrapping="Wrap"
+                 MinHeight="80"
+                 Background="{StaticResource Descriptionwatermark}"
+                 TextChanged="Add_descripton_TextChanged"/>
+        <Button Name="addtaskbutton"
+                Style="{StaticResource Rounded3DButtonStyle}"
+                Click="addtaskbutton_Click"
+                Content="Add"
+                Height="30" 
+                Width="60"
+                FontSize="12"
+                FontWeight="DemiBold"
+                Margin="20,10,30,0" 
+                Grid.Row="3"
+                Grid.Column="1"/>
+
     </Grid>
 </Window>
