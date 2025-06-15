@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:todolist_mvvm.view"
         mc:Ignorable="d"
         Icon="/Assets/Images/edit.jpg"
-        Title="Add New Task" Height="400" Width="500" MinHeight="400" MinWidth="400">
+        Title="Add New Task" Height="400" Width="600" MinHeight="400" MinWidth="400">
     <Grid Background="{StaticResource bgimage}">
         
     </Grid>

@@ -26,18 +26,16 @@
 
         <TextBox Name="textboxsample" 
                  Grid.Row="1"
-                 
-                 HorizontalContentAlignment="Center"
-                 Margin=" 0,10,0,10"
-                 Height="40"
-                 Padding="8"
-                 FontSize="15"
-                 FontStretch="ExtraExpanded"
-                 FontWeight="DemiBold"         
-                 TextChanged="textboxsample_TextChanged" Grid.ColumnSpan="4" Width="Auto"  MinWidth="140" MaxWidth="500" Background="{StaticResource Textwatermark}" />
+                 Grid.ColumnSpan="4"
+                 Background="{StaticResource Textwatermark}"
+                 Style="{StaticResource CustomTextBox}"
+                 TextChanged="textboxsample_TextChanged"   />
     
-        <PasswordBox Name="passboxsample" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0" Width="Auto" MinWidth="140" MaxWidth="500" Margin=" 0,10,0,10" Background="{StaticResource PasswordHint}" 
-                 HorizontalContentAlignment="Center"   Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Height="40" PasswordChanged="passboxsample_PasswordChanged" />
+        <PasswordBox Name="passboxsample"
+                     Grid.Row="2" Grid.ColumnSpan="4" 
+                     Background="{StaticResource PasswordHint}" 
+                     Style="{StaticResource CustomPasswordBox}"
+                     PasswordChanged="passboxsample_PasswordChanged" />
         
         <TextBlock Grid.Row="5" Grid.ColumnSpan="3" HorizontalAlignment="Center"   Padding="8" FontSize="12" FontStretch="ExtraExpanded" FontWeight="Medium"><Run Text="     New User?" />
         <Hyperlink Click="Signedup" FontSize="12" FontStretch="ExtraExpanded" FontWeight="ExtraBold">
@@ -48,7 +46,9 @@
                 Content="Login"
                 FontSize="12"
                 FontWeight="DemiBold"
-                Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Width="60" Height=" 30" Style="{StaticResource Rounded3DButtonStyle}"
+                Grid.Row="3" Grid.ColumnSpan="3" 
+                HorizontalAlignment="Center" Width="60" Height=" 30" 
+                Style="{StaticResource Rounded3DButtonStyle}"
                 Margin="30,10,20,0"
                 Click="Logedin" />
     </Grid>

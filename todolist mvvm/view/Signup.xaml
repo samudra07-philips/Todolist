@@ -25,17 +25,23 @@
         </Grid.ColumnDefinitions>
         
         <TextBox Name="textboxsignup" 
-         Grid.Row="1"
+         Grid.Row="1" Grid.ColumnSpan="4" 
          HorizontalContentAlignment="Center"
          Background="{StaticResource Textwatermark}"
-         Margin="0,10,0,10"
-         TextChanged="textboxsignup_TextChanged" Grid.ColumnSpan="4" Width="Auto" TextWrapping="Wrap" MinWidth="140" MaxWidth="500"  Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" />
+         Style="{StaticResource Custombox}"
+         TextChanged="textboxsignup_TextChanged"/>
 
-        <PasswordBox Name="passboxsignup" Width="Auto"  MinWidth="140" MaxWidth="500" Grid.Row="2" Grid.ColumnSpan="4" Grid.Column="0"  Margin="0,10,0,10"
-        PasswordChanged="passboxsignup_PasswordChanged"   Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource PasswordHint}" HorizontalContentAlignment="Center" />
+        <PasswordBox Name="passboxsignup" 
+                     Grid.Row="2" Grid.ColumnSpan="4" 
+                     PasswordChanged="passboxsignup_PasswordChanged"  
+                     Background="{StaticResource PasswordHint}" 
+                     Style="{StaticResource CustomPasswordBox}"/>
 
-        <PasswordBox Name="checkpassboxsignup" Width="Auto"  MinWidth="140" MaxWidth="500" Grid.Row="3" Grid.ColumnSpan="4" Grid.Column="0"  Margin="0,10,0,10"
-        PasswordChanged="checkpassboxsignup_PasswordChanged"  Padding="8" FontSize="15" FontStretch="ExtraExpanded" FontWeight="DemiBold" Background="{StaticResource confirmpass}" HorizontalContentAlignment="Center"/>
+        <PasswordBox Name="checkpassboxsignup"
+                     Grid.Row="3" Grid.ColumnSpan="4" 
+                     PasswordChanged="checkpassboxsignup_PasswordChanged" 
+                     Background="{StaticResource confirmpass}"
+                     Style="{StaticResource CustomPasswordBox}"/>
         
         <Button Name="SignUp" 
                 Style="{StaticResource Rounded3DButtonStyle}"

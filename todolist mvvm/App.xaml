@@ -39,6 +39,21 @@
           />
                 </VisualBrush.Visual>
             </VisualBrush>
+            <Style x:Key="Custombox" TargetType="Control">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,10,0,10"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Padding" Value="8"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontStretch" Value="ExtraExpanded"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="MinWidth" Value="140"/>
+                <Setter Property="MaxWidth" Value="500"/>
+            </Style>
+            <Style x:Key="CustomTextBox" TargetType="TextBox" BasedOn="{StaticResource Custombox}"/>
+            <Style x:Key="CustomPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource Custombox}"/>
+
             <Style x:Key="Rounded3DButtonStyle" TargetType="Button">
                 <Setter Property="Foreground" Value="Black"/>
                 <Setter Property="FontSize" Value="14"/>
