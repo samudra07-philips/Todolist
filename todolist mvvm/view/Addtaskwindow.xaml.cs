@@ -18,23 +18,25 @@ namespace todolist_mvvm.view
     /// <summary>
     /// Interaction logic for Addtaskwindow.xaml
     /// </summary>
-    public partial class Addtaskwindow : Window,IRefreshablePage
+    public partial class Addtaskwindow : Window, IRefreshablePage
     {
         public Addtaskwindow()
         {
             InitializeComponent();
         }
+
         public void RefreshContent()
         {
-            Taskname.Text= string.Empty;
-            Add_descripton.Text= string.Empty;
-
+            Taskname.Text = string.Empty;
+            Add_descripton.Text = string.Empty;
         }
+
         private void Taskname_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(string.IsNullOrEmpty(Taskname.Text))
+            if (string.IsNullOrEmpty(Taskname.Text))
                 Taskname.Background.Opacity = 1;
-            else Taskname.Background.Opacity = 0;
+            else
+                Taskname.Background.Opacity = 0;
         }
 
         private void Add_descripton_TextChanged(object sender, TextChangedEventArgs e)
@@ -47,7 +49,7 @@ namespace todolist_mvvm.view
 
         private void addtaskbutton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

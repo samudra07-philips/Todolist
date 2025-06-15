@@ -19,51 +19,69 @@ namespace todolist_mvvm.view
     /// <summary>
     /// Interaction logic for Signup.xaml
     /// </summary>
-    public partial class Signup : Page,IRefreshablePage
+    public partial class Signup : Page, IRefreshablePage
     {
         public Signup()
         {
             InitializeComponent();
         }
+
         public void RefreshContent()
         {
             textboxsignup.Text = string.Empty;
             passboxsignup.Password = string.Empty;
             checkpassboxsignup.Password = string.Empty;
         }
+
         private void textboxsignup_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(textboxsignup.Text))
                 textboxsignup.Background.Opacity = 1;
             else
                 textboxsignup.Background.Opacity = 0;
-
         }
+
         private void passboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(passboxsignup.Password))
-               passboxsignup.Background.Opacity = 1;
+                passboxsignup.Background.Opacity = 1;
             else
                 passboxsignup.Background.Opacity = 0;
         }
+
         private void checkpassboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(checkpassboxsignup.Password))
                 checkpassboxsignup.Background.Opacity = 1;
             else
-               checkpassboxsignup.Background.Opacity = 0;
+                checkpassboxsignup.Background.Opacity = 0;
         }
+
         private void SignUp_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(textboxsignup.Text) || string.IsNullOrEmpty(passboxsignup.Password) || string.IsNullOrEmpty(checkpassboxsignup.Password))
+            if (
+                string.IsNullOrEmpty(textboxsignup.Text)
+                || string.IsNullOrEmpty(passboxsignup.Password)
+                || string.IsNullOrEmpty(checkpassboxsignup.Password)
+            )
             {
-                MessageBox.Show("Invalid Credentials! Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    "Invalid Credentials! Please fill in all fields.",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
                 return;
             }
-            
+
             if (passboxsignup.Password == checkpassboxsignup.Password)
             {
-                MessageBox.Show("Your account has been successfully created!\n Please log in to your acount!", "Account Created", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+                    "Your account has been successfully created!\n Please log in to your acount!",
+                    "Account Created",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
                 if (this.NavigationService != null)
                 {
                     this.NavigationService.Navigate(new LoginPage());
@@ -75,17 +93,22 @@ namespace todolist_mvvm.view
             }
             else if (passboxsignup.Password != checkpassboxsignup.Password)
             {
-                MessageBox.Show("Passwords do not match!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                MessageBox.Show(
+                    "Passwords do not match!",
+                    "Warning",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
             }
             else
             {
-                MessageBox.Show("Invalid Credentials", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
+                MessageBox.Show(
+                    "Invalid Credentials",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
             }
         }
-       }
-
-
+    }
 }
-

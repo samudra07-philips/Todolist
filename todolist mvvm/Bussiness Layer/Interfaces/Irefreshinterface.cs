@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace todolist_mvvm.viewmodel
 {
-   
-        public interface IRefreshablePage
-        {
-            void RefreshContent();
-        } 
-    
+    public interface IRefreshablePage
+    {
+        void RefreshContent();
+    }
 }

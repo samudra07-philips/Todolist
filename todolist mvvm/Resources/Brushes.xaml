@@ -1,0 +1,83 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageBrush
+        x:Key="bgimage"
+        ImageSource="/Resources/Assets/Images/bg.jpg"
+        Stretch="UniformToFill" />
+    <VisualBrush
+        x:Key="PasswordHint"
+        Opacity="1"
+        Stretch="None">
+        <VisualBrush.Visual>
+            <TextBlock
+                FontSize="15"
+                FontWeight="Light"
+                Foreground="Gray"
+                Text=" ENTER YOUR PASSWORD" />
+        </VisualBrush.Visual>
+    </VisualBrush>
+    <VisualBrush
+        x:Key="Textwatermark"
+        Opacity="1"
+        Stretch="None">
+        <VisualBrush.Visual>
+            <TextBlock
+                FontSize="15"
+                FontWeight="Light"
+                Foreground="Gray"
+                Text=" ENTER YOUR NAME" />
+        </VisualBrush.Visual>
+    </VisualBrush>
+    <VisualBrush
+        x:Key="addtaskwatermark"
+        Opacity="1"
+        Stretch="None">
+        <VisualBrush.Visual>
+            <TextBlock
+                FontSize="15"
+                FontWeight="Light"
+                Foreground="Gray"
+                Text=" ENTER TASK NAME" />
+        </VisualBrush.Visual>
+    </VisualBrush>
+    <VisualBrush
+        x:Key="Descriptionwatermark"
+        Opacity="1"
+        Stretch="None">
+        <VisualBrush.Visual>
+
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="15"
+                FontWeight="Light"
+                Foreground="Gray"
+                Text="DESCRIPTION..." />
+
+        </VisualBrush.Visual>
+    </VisualBrush>
+    <VisualBrush
+        x:Key="Textwatermark1"
+        Opacity="1"
+        Stretch="None">
+        <VisualBrush.Visual>
+            <TextBlock
+                FontSize="15"
+                FontWeight="Light"
+                Foreground="Gray"
+                Text=" ENTER YOUR NAME" />
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <VisualBrush
+        x:Key="confirmpass"
+        Opacity="1"
+        Stretch="None">
+        <VisualBrush.Visual>
+            <TextBlock
+                FontSize="15"
+                FontWeight="Light"
+                Foreground="Gray"
+                Text="CONFIRM YOUR PASSWORD" />
+        </VisualBrush.Visual>
+    </VisualBrush>
+</ResourceDictionary>

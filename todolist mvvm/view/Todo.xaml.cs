@@ -30,17 +30,15 @@ namespace todolist_mvvm.view
         {
             Addtaskwindow a = new Addtaskwindow();
             Mainwindow m = Application.Current.MainWindow as Mainwindow;
-            double l=m.Left+(m.Width-a.Width)/2;
-            double t=m.Top+(m.Height-a.Height)/2;
+            double l = m.Left + (m.Width - a.Width) / 2;
+            double t = m.Top + (m.Height - a.Height) / 2;
             a.Left = l;
             a.Top = t;
-            if(a.Content is IRefreshablePage)
+            if (a.Content is IRefreshablePage)
             {
                 a.RefreshContent();
             }
             a.ShowDialog();
         }
-
-       
     }
 }
