@@ -60,8 +60,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bussiness Layer\Interfaces\Irefreshinterface.cs" />
+    <Compile Include="viewmodel\LoginPageViewModel.cs" />
     <Compile Include="viewmodel\MainWindowViewModel.cs" />
     <Compile Include="viewmodel\RelayCommand.cs" />
+    <Compile Include="viewmodel\SignUpViewModel.cs" />
     <Compile Include="view\Addtaskwindow.xaml.cs">
       <DependentUpon>Addtaskwindow.xaml</DependentUpon>
     </Compile>

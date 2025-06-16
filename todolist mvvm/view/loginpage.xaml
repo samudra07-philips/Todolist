@@ -4,9 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:todolist_mvvm"
+    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="Login Page"
     mc:Ignorable="d">
-
+    <Page.DataContext>
+        <vm:LoginPageViewModel/>
+    </Page.DataContext>
     <Grid>
 
         <Grid.RowDefinitions>
@@ -31,15 +35,16 @@
             Grid.ColumnSpan="4"
             Background="{StaticResource Textwatermark}"
             Style="{StaticResource CustomTextBox}"
-            TextChanged="textboxsample_TextChanged" />
+            TextChanged="textboxsample_TextChanged"
+            Text="{Binding Username,UpdateSourceTrigger=PropertyChanged}" />
 
         <PasswordBox
             Name="passboxsample"
             Grid.Row="2"
             Grid.ColumnSpan="4"
             Background="{StaticResource PasswordHint}"
-            PasswordChanged="passboxsample_PasswordChanged"
-            Style="{StaticResource CustomPasswordBox}" />
+            Style="{StaticResource CustomPasswordBox}"
+            PasswordChanged="OnPasswordChanged"/>
 
         <TextBlock
             Grid.Row="5"
@@ -50,7 +55,8 @@
             FontStretch="ExtraExpanded"
             FontWeight="Medium"><Run Text="     New User?" />
             <Hyperlink
-                Click="Signedup"
+                Command="{Binding SignUpCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}"
                 FontSize="12"
                 FontStretch="ExtraExpanded"
                 FontWeight="ExtraBold">
@@ -62,7 +68,8 @@
             Grid.Row="3"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center"
-            Click="Logedin"
+            Command="{Binding LoginCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}"
             Content="Login"
             Style="{StaticResource Rounded3DButtonStyle}" />
     </Grid>

@@ -27,7 +27,12 @@ namespace todolist_mvvm.view
         }
 
         public void RefreshContent()
-        {
+        {   if (DataContext is SignUpViewModel viewmodel)
+            {
+                textboxsignup.Text = string.Empty;
+                passboxsignup.Password = string.Empty;
+                checkpassboxsignup.Password = string.Empty;
+            }
             textboxsignup.Text = string.Empty;
             passboxsignup.Password = string.Empty;
             checkpassboxsignup.Password = string.Empty;
@@ -47,6 +52,11 @@ namespace todolist_mvvm.view
                 passboxsignup.Background.Opacity = 1;
             else
                 passboxsignup.Background.Opacity = 0;
+            if(DataContext is SignUpViewModel viewModel)
+            {
+                viewModel.Password=((PasswordBox)sender).Password;
+            }
+
         }
 
         private void checkpassboxsignup_PasswordChanged(object sender, RoutedEventArgs e)
@@ -55,60 +65,13 @@ namespace todolist_mvvm.view
                 checkpassboxsignup.Background.Opacity = 1;
             else
                 checkpassboxsignup.Background.Opacity = 0;
+
+            if (DataContext is SignUpViewModel viewModel)
+            {
+                viewModel.Confirmpassword = ((PasswordBox)sender).Password;
+            }
         }
 
-        private void SignUp_Click(object sender, RoutedEventArgs e)
-        {
-            if (
-                string.IsNullOrEmpty(textboxsignup.Text)
-                || string.IsNullOrEmpty(passboxsignup.Password)
-                || string.IsNullOrEmpty(checkpassboxsignup.Password)
-            )
-            {
-                MessageBox.Show(
-                    "Invalid Credentials! Please fill in all fields.",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
-                return;
-            }
-
-            if (passboxsignup.Password == checkpassboxsignup.Password)
-            {
-                MessageBox.Show(
-                    "Your account has been successfully created!\n Please log in to your acount!",
-                    "Account Created",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
-                if (this.NavigationService != null)
-                {
-                    this.NavigationService.Navigate(new LoginPage());
-                }
-                else if (Application.Current.MainWindow is Mainwindow mainWindow)
-                {
-                    mainWindow.MainFrame.Navigate(new LoginPage());
-                }
-            }
-            else if (passboxsignup.Password != checkpassboxsignup.Password)
-            {
-                MessageBox.Show(
-                    "Passwords do not match!",
-                    "Warning",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Invalid Credentials",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
-            }
-        }
+        
     }
 }
