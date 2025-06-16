@@ -60,6 +60,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bussiness Layer\Interfaces\Irefreshinterface.cs" />
+    <Compile Include="viewmodel\MainWindowViewModel.cs" />
+    <Compile Include="viewmodel\RelayCommand.cs" />
     <Compile Include="view\Addtaskwindow.xaml.cs">
       <DependentUpon>Addtaskwindow.xaml</DependentUpon>
     </Compile>
@@ -104,7 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="model\" />
-    <Folder Include="viewmodel\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\Brushes.xaml">

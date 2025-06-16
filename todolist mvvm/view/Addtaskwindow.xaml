@@ -47,13 +47,8 @@
             Name="addtaskbutton"
             Grid.Row="3"
             Grid.Column="1"
-            Width="60"
-            Height="30"
-            Margin="20,10,30,0"
             Click="addtaskbutton_Click"
-            Content="Add"
-            FontSize="12"
-            FontWeight="DemiBold"
+            Content=" Add "
             Style="{StaticResource Rounded3DButtonStyle}" />
 
     </Grid>

@@ -55,13 +55,8 @@
             Name="SignUp"
             Grid.Row="4"
             Grid.Column="1"
-            Width="60"
-            Height="30"
-            Margin="20,10,30,0"
             Click="SignUp_Click"
             Content=" Sign Up "
-            FontSize="12"
-            FontWeight="DemiBold"
             Style="{StaticResource Rounded3DButtonStyle}" />
 
     </Grid>

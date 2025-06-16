@@ -24,23 +24,9 @@ namespace todolist_mvvm
         public Mainwindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel(MainFrame);
             MainFrame.Navigate(new LoginPage());
         }
-
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            if (MainFrame.CanGoBack)
-            {
-                MainFrame.GoBack();
-            }
-        }
-
-        private void Refresh_Click(object sender, RoutedEventArgs e)
-        {
-            if (MainFrame.Content is IRefreshablePage refreshablePage)
-            {
-                refreshablePage.RefreshContent();
-            }
-        }
     }
+
 }

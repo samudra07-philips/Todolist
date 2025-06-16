@@ -5,16 +5,12 @@
     xmlns:local="clr-namespace:todolist_mvvm"
     StartupUri="view/mainwindow.xaml">
     <Application.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Brushes.xaml" />
+                <ResourceDictionary Source="/Resources/Brushes.xaml" />
                 <ResourceDictionary Source="/Resources/Textboxstyles.xaml" />
                 <ResourceDictionary Source="/Resources/Buttonstyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </Application.Resources>
-
-
 </Application>
