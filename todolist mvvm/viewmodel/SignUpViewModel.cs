@@ -8,79 +8,78 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using todolist_mvvm.view;
-
 namespace todolist_mvvm.viewmodel
 {
     public class SignUpViewModel : INotifyPropertyChanged
     {
-        
         private string username;
         private string password;
         private string confirmpassword;
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public string Username
         {
             get => username;
             set
             {
-                username = value;
-                OnPropertyChanged(nameof(username));
-                Signupcommand.RaiseCanExecuteChanged();
+                if (username != value)
+                {
+                    username = value;
+                    OnPropertyChanged(nameof(Username));
+                    SignupCommand.RaiseCanExecuteChanged();
+                }
             }
         }
+
         public string Password
         {
             get => password;
             set
             {
-                password = value;
-                OnPropertyChanged(nameof(Password));
-                Signupcommand.RaiseCanExecuteChanged();
+                if (password != value)
+                {
+                    password = value;
+                    OnPropertyChanged(nameof(Password));
+                    SignupCommand.RaiseCanExecuteChanged();
+                }
             }
         }
+
         public string Confirmpassword
         {
-            get => password;
+            get => confirmpassword;
             set
             {
-                password = value;
-                OnPropertyChanged(nameof(Confirmpassword));
-                Signupcommand.RaiseCanExecuteChanged();
+                if (confirmpassword != value)
+                {
+                    confirmpassword = value;
+                    OnPropertyChanged(nameof(Confirmpassword));
+                    SignupCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public RelayCommand Signupcommand { get; }
+        public RelayCommand SignupCommand { get; }
 
         public SignUpViewModel()
         {
-            Signupcommand = new RelayCommand(Execute);
+            SignupCommand = new RelayCommand(Execute);
         }
 
-        public bool Canexecute(object parameter)
-        {
-            bool cansignup = true;
-            if (
-                string.IsNullOrEmpty(Username)
-                || string.IsNullOrEmpty(Password)
-                || string.IsNullOrEmpty(Confirmpassword)
-            )
-                cansignup = false;
-            return cansignup;
-        }
-        public bool Aresamepass(object parameter)
-        {
-            bool samepasswords = true;
-            if(Password!=Confirmpassword)samepasswords = false;
-            return samepasswords;
-        }
-        public void Execute(object parameter) {
+        //private bool CanExecute(object parameter)
+        //{
+        //    return !string.IsNullOrEmpty(Username) &&
+        //           !string.IsNullOrEmpty(Password) &&
+        //           !string.IsNullOrEmpty(Confirmpassword) &&
+        //           Password == Confirmpassword;
+        //}
 
-            if (!Canexecute(null))
+        private void Execute(object parameter)
+        {
+            if (string.IsNullOrEmpty(Username) ||
+                string.IsNullOrEmpty(Password) ||
+                string.IsNullOrEmpty(Confirmpassword))
             {
                 MessageBox.Show(
                     "Invalid Credentials! Please fill in all fields.",
@@ -90,7 +89,8 @@ namespace todolist_mvvm.viewmodel
                 );
                 return;
             }
-            if (!Aresamepass(null))
+
+            if (Password != Confirmpassword)
             {
                 MessageBox.Show(
                     "Passwords do not match!",
@@ -100,16 +100,22 @@ namespace todolist_mvvm.viewmodel
                 );
                 return;
             }
-            if( parameter is Page page)
+
+            if (parameter is Page page)
             {
                 MessageBox.Show(
-                    "Your account has been successfully created!\n Please log in to your acount!",
+                    "Your account has been successfully created!\n Please log in to your account!",
                     "Account Created",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information
                 );
                 page.NavigationService.Navigate(new LoginPage());
             }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

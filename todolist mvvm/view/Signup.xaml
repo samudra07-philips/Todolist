@@ -59,7 +59,7 @@
             Name="SignUp"
             Grid.Row="4"
             Grid.Column="1"
-            Command="{Binding Signupcommand}"
+            Command="{Binding SignupCommand}"
             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}"
             Content=" Sign Up "
             Style="{StaticResource Rounded3DButtonStyle}" />
