@@ -23,6 +23,7 @@ namespace todolist_mvvm.view
         public Addtaskwindow()
         {
             InitializeComponent();
+            DataContext = new AddTaskWindowViewModel(this);
         }
 
         public void RefreshContent()
@@ -47,9 +48,6 @@ namespace todolist_mvvm.view
                 Add_descripton.Background.Opacity = 0;
         }
 
-        private void addtaskbutton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        
     }
 }

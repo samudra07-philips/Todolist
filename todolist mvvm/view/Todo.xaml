@@ -5,8 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:todolist_mvvm.view"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="Todo">
-
+    <Page.DataContext>
+        <vm:ToDoViewModel/>
+    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -34,8 +37,10 @@
             VerticalAlignment="Top"
             Background="Transparent"
             BorderThickness="0"
-            Click="addtask_Click">
+            Command="{Binding AddCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}">
             <Image Source="/Resources/Assets/Images/addbutton.png" Stretch="Uniform" />
         </Button>
+
     </Grid>
 </Page>

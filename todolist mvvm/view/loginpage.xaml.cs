@@ -34,6 +34,7 @@ namespace todolist_mvvm.view
         public LoginPage()
         {
             InitializeComponent();
+            
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
