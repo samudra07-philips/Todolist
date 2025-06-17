@@ -1,0 +1,31 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Style
+        x:Key="CustomTextBoxWithWatermark"
+        BasedOn="{StaticResource CustomTextBox}"
+        TargetType="TextBox">
+        <!--  Default Watermark Background  -->
+        <Setter Property="Background" Value="{StaticResource Textwatermark}" />
+
+        <Style.Triggers>
+            <!--  Transparent Background when text is not empty  -->
+            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="">
+                <Setter Property="Background" Value="{StaticResource Textwatermark}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                <Setter Property="Background" Value="{StaticResource Textwatermark}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="{x:Static sys:String.Empty}">
+                <Setter Property="Background" Value="{StaticResource Textwatermark}" />
+            </DataTrigger>
+
+            <!--  Transparent Background when text is present  -->
+            <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                <Setter Property="Background" Value="Transparent" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

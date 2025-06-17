@@ -3,6 +3,10 @@
         x:Key="bgimage"
         ImageSource="/Resources/Assets/Images/bg.jpg"
         Stretch="UniformToFill" />
+    <ImageBrush
+        x:Key="bgimage2"
+        ImageSource="/Resources/Assets/Images/b2.jpg"
+        Stretch="UniformToFill" />
     <VisualBrush
         x:Key="PasswordHint"
         Opacity="1"

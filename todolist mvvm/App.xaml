@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="/Resources/Brushes.xaml" />
                 <ResourceDictionary Source="/Resources/Textboxstyles.xaml" />
                 <ResourceDictionary Source="/Resources/Buttonstyles.xaml" />
+                <!--<ResourceDictionary Source="/Resources/TextBoxWithWatermark.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

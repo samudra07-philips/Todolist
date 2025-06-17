@@ -30,16 +30,18 @@
         <Button
             Name="addtask"
             Grid.ColumnSpan="3"
-            Width="50"
-            Height="50"
+            Width="40"
+            Height="40"
             Margin="0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Background="Transparent"
             BorderThickness="0"
             Command="{Binding AddCommand}"
+            
             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}">
             <Image Source="/Resources/Assets/Images/addbutton.png" Stretch="Uniform" />
+            
         </Button>
 
     </Grid>

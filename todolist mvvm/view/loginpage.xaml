@@ -3,14 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:todolist_mvvm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="Login Page"
     mc:Ignorable="d">
     <Page.DataContext>
-        <vm:LoginPageViewModel/>
+        <vm:LoginPageViewModel />
     </Page.DataContext>
+    <Page.InputBindings>
+        <KeyBinding Gesture="Enter" Command="{Binding LoginCommand}" />
+    </Page.InputBindings>
     <Grid>
 
         <Grid.RowDefinitions>
@@ -35,16 +38,16 @@
             Grid.ColumnSpan="4"
             Background="{StaticResource Textwatermark}"
             Style="{StaticResource CustomTextBox}"
-            TextChanged="textboxsample_TextChanged"
-            Text="{Binding Username,UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+            TextChanged="textboxsample_TextChanged" />
 
         <PasswordBox
             Name="passboxsample"
             Grid.Row="2"
             Grid.ColumnSpan="4"
             Background="{StaticResource PasswordHint}"
-            Style="{StaticResource CustomPasswordBox}"
-            PasswordChanged="OnPasswordChanged"/>
+            PasswordChanged="OnPasswordChanged"
+            Style="{StaticResource CustomPasswordBox}" />
 
         <TextBlock
             Grid.Row="5"

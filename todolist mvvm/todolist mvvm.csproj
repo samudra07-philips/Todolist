@@ -124,6 +124,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\TextBoxWithWatermark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\mainwindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,19 +150,26 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Assets\Images\back-button-interface-icon-illustration-vector.jpg" />
-    <Resource Include="Resources\Assets\Images\refresh-button-icon-17.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Assets\Images\addbutton.png" />
     <Resource Include="Resources\Assets\Images\delete.jpg" />
     <Resource Include="Resources\Assets\Images\edit.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Assets\Images\light-blue-green-background-with-curves-vector.jpg" />
+    <Resource Include="Resources\Assets\Images\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Assets\Images\bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\Images\b2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\Images\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\Images\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\Images\addbutton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

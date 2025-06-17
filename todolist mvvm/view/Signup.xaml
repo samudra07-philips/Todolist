@@ -13,6 +13,9 @@
     <Page.DataContext>
         <vm:SignUpViewModel/>
     </Page.DataContext>
+    <Page.InputBindings>
+        <KeyBinding Gesture="Enter" Command="{Binding SignupCommand}" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
