@@ -154,9 +154,6 @@
     <Resource Include="Resources\Assets\Images\edit.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Assets\Images\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Assets\Images\bg.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +167,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Assets\Images\addbutton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Assets\Images\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
