@@ -16,6 +16,7 @@ namespace todolist_mvvm.viewmodel
         private Frame _mainFrame;
 
         public MainWindowViewModel() { }
+        
 
         public MainWindowViewModel(Frame mainFrame)
         {

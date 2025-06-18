@@ -1,40 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using todolist_mvvm.Data;
 using todolist_mvvm.view;
-
+using todolist_mvvm.model;
 namespace todolist_mvvm.viewmodel
 {
-    public class LoginPageViewModel : INotifyPropertyChanged
+    public class LoginPageViewModel : BaseViewModel
     {
-        private string username;
-        private string password;
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _username;
+        private string _password;
 
         public string Username
         {
-            get => username;
+            get => _username;
             set
             {
-                username = value;
-                OnPropertyChanged(nameof(Username));
-                LoginCommand.RaiseCanExecuteChanged();
+                if (_username != value)
+                {
+                    _username = value;
+                    OnPropertyChanged(nameof(Username));
+                    LoginCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
         public string Password
         {
-            get => password;
+            get => _password;
             set
             {
-                password = value;
-                OnPropertyChanged(nameof(Password));
-                LoginCommand.RaiseCanExecuteChanged();
+                if (_password != value)
+                {
+                    _password = value;
+                    OnPropertyChanged(nameof(Password));
+                    LoginCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -43,24 +47,18 @@ namespace todolist_mvvm.viewmodel
 
         public LoginPageViewModel()
         {
-            LoginCommand = new RelayCommand(ExecuteLogin);
+            LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin);
             SignUpCommand = new RelayCommand(ExecuteSignUp);
-        }
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private bool CanExecuteLogin(object parameter)
         {
-            bool canlogin = !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
-            return canlogin;
+            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
         }
 
         private void ExecuteLogin(object parameter)
         {
-            if (!CanExecuteLogin(null))
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
             {
                 MessageBox.Show(
                     "Invalid Credentials! Please fill in all fields.",
@@ -70,8 +68,32 @@ namespace todolist_mvvm.viewmodel
                 );
                 return;
             }
+
+            using (var context = new AppDbContext())
+            {
+           
+                string passwordHash = HashPassword(Password);
+
+                var user = context.Users.FirstOrDefault(u =>
+                    u.Username == Username && u.PasswordHash == passwordHash
+                );
+
+                if (user == null)
+                {
+                    MessageBox.Show(
+                        "Invalid username or password!",
+                        "Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                    return;
+                }
+            }
+
+            
             if (parameter is Page page)
             {
+               
                 page.NavigationService.Navigate(new Todo());
             }
         }
@@ -81,6 +103,16 @@ namespace todolist_mvvm.viewmodel
             if (parameter is Page page)
             {
                 page.NavigationService.Navigate(new Signup());
+            }
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(password);
+                var hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
             }
         }
     }

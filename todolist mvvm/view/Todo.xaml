@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="Todo">
     <Page.DataContext>
-        <vm:ToDoViewModel/>
+        <vm:ToDoViewModel />
     </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,10 +38,9 @@
             Background="Transparent"
             BorderThickness="0"
             Command="{Binding AddCommand}"
-            
             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}">
             <Image Source="/Resources/Assets/Images/addbutton.png" Stretch="Uniform" />
-            
+
         </Button>
 
     </Grid>

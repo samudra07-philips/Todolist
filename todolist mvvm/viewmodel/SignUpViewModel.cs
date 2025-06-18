@@ -1,31 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using todolist_mvvm.Data;
+using todolist_mvvm.model;
 using todolist_mvvm.view;
+
 namespace todolist_mvvm.viewmodel
 {
-    public class SignUpViewModel : INotifyPropertyChanged
+    public class SignUpViewModel : BaseViewModel
     {
-        private string username;
-        private string password;
-        private string confirmpassword;
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _username;
+        private string _password;
+        private string _confirmpassword;
 
         public string Username
         {
-            get => username;
+            get => _username;
             set
-            {
-                if (username != value)
+            {   
+                if (_username != value)
                 {
-                    username = value;
+                    if (value.Length < 5 || value.Length > 20)
+                    {
+                        MessageBox.Show(
+                            "Username must be between 5 and 20 characters.",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                        return;
+                    }
+                    var isValid = Regex.IsMatch(value, @"^[a-zA-Z0-9_]*$");
+                    if (!isValid)
+                    {
+                        MessageBox.Show(
+                            "Invalid username! Only alphanumeric characters and underscores are allowed.",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                        return;
+                    }
+                    _username = value;
                     OnPropertyChanged(nameof(Username));
                     SignupCommand.RaiseCanExecuteChanged();
                 }
@@ -34,12 +54,22 @@ namespace todolist_mvvm.viewmodel
 
         public string Password
         {
-            get => password;
+            get => _password;
             set
             {
-                if (password != value)
+                if (_password != value)
                 {
-                    password = value;
+                    if (value.Length < 8 || value.Length > 15)
+                    {
+                        MessageBox.Show(
+                            "Password must be between 8 and 15 characters.",
+                            "Error",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                        return;
+                    }
+                    _password = value;
                     OnPropertyChanged(nameof(Password));
                     SignupCommand.RaiseCanExecuteChanged();
                 }
@@ -48,12 +78,12 @@ namespace todolist_mvvm.viewmodel
 
         public string Confirmpassword
         {
-            get => confirmpassword;
+            get => _confirmpassword;
             set
             {
-                if (confirmpassword != value)
+                if (_confirmpassword != value)
                 {
-                    confirmpassword = value;
+                    _confirmpassword = value;
                     OnPropertyChanged(nameof(Confirmpassword));
                     SignupCommand.RaiseCanExecuteChanged();
                 }
@@ -67,19 +97,13 @@ namespace todolist_mvvm.viewmodel
             SignupCommand = new RelayCommand(Execute);
         }
 
-        //private bool CanExecute(object parameter)
-        //{
-        //    return !string.IsNullOrEmpty(Username) &&
-        //           !string.IsNullOrEmpty(Password) &&
-        //           !string.IsNullOrEmpty(Confirmpassword) &&
-        //           Password == Confirmpassword;
-        //}
-
         private void Execute(object parameter)
         {
-            if (string.IsNullOrEmpty(Username) ||
-                string.IsNullOrEmpty(Password) ||
-                string.IsNullOrEmpty(Confirmpassword))
+            if (
+                string.IsNullOrEmpty(Username)
+                || string.IsNullOrEmpty(Password)
+                || string.IsNullOrEmpty(Confirmpassword)
+            )
             {
                 MessageBox.Show(
                     "Invalid Credentials! Please fill in all fields.",
@@ -101,6 +125,30 @@ namespace todolist_mvvm.viewmodel
                 return;
             }
 
+            // Hash the password
+            string passwordHash = HashPassword(Password);
+
+            // Save to database
+            using (var context = new AppDbContext())
+            {
+                if (context.Users.Any(u => u.Username == Username))
+                {
+                    MessageBox.Show(
+                        "This username is already taken.",
+                        "Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                    return;
+                }
+
+                var user = new User { Username = Username, PasswordHash = passwordHash };
+
+                context.Users.Add(user);
+                context.SaveChanges();
+            }
+
+            // Navigate to login page
             if (parameter is Page page)
             {
                 MessageBox.Show(
@@ -113,9 +161,14 @@ namespace todolist_mvvm.viewmodel
             }
         }
 
-        private void OnPropertyChanged(string propertyName)
+        private string HashPassword(string password)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(password);
+                var hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
+            }
         }
     }
 }

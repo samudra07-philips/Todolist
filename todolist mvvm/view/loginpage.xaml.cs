@@ -43,6 +43,7 @@ namespace todolist_mvvm.view
                 passboxsample.Background.Opacity = 1;
             else
                 passboxsample.Background.Opacity = 0;
+         
             if (DataContext is LoginPageViewModel viewModel)
             {
                 viewModel.Password = ((PasswordBox)sender).Password;

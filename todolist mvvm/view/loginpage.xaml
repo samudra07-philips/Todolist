@@ -38,6 +38,7 @@
             Grid.ColumnSpan="4"
             Background="{StaticResource Textwatermark}"
             Style="{StaticResource CustomTextBox}"
+            MaxLength="20"
             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
             TextChanged="textboxsample_TextChanged" />
 
@@ -45,6 +46,7 @@
             Name="passboxsample"
             Grid.Row="2"
             Grid.ColumnSpan="4"
+            MaxLength="15"
             Background="{StaticResource PasswordHint}"
             PasswordChanged="OnPasswordChanged"
             Style="{StaticResource CustomPasswordBox}" />

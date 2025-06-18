@@ -10,10 +10,9 @@ using todolist_mvvm.view;
 
 namespace todolist_mvvm.viewmodel
 {
-    public class ToDoViewModel : INotifyPropertyChanged
+    public class ToDoViewModel : BaseViewModel
     {
         public RelayCommand AddCommand { get; }
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ToDoViewModel()
         {
@@ -50,12 +49,6 @@ namespace todolist_mvvm.viewmodel
             }
         }
 
-
-        
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+   
     }
 }

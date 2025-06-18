@@ -5,7 +5,7 @@ obj/
 *.user
 *.cache
 *.log
-
+packages/
 # Ignore Visual Studio temporary files, build results, and other unnecessary files.
 .vs/
 *.pdb

@@ -10,10 +10,9 @@ using System.Windows.Input;
 
 namespace todolist_mvvm.viewmodel
 {
-    public class AddTaskWindowViewModel : INotifyPropertyChanged
+    public class AddTaskWindowViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
+       
         private string title;
         private string description;
         private readonly Window window;
@@ -72,9 +71,6 @@ namespace todolist_mvvm.viewmodel
             AddNewTask = new RelayCommand(Execute, CanExecute);
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }
