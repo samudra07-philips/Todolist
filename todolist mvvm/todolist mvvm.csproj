@@ -158,7 +158,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Assets\Images\bg.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\Brushes.xaml">
       <SubType>Designer</SubType>
@@ -216,9 +218,6 @@
   <ItemGroup>
     <Resource Include="Resources\Assets\Images\delete.jpg" />
     <Resource Include="Resources\Assets\Images\edit.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Assets\Images\bg.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Assets\Images\b2.jpg" />

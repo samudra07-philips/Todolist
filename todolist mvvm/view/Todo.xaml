@@ -4,18 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="Todo">
-
-
-    <!--  Main Grid  -->
     <Grid Background="{StaticResource PageBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-
             <RowDefinition Height="*" />
-
         </Grid.RowDefinitions>
 
-        <!--  Header Section  -->
         <DockPanel
             Grid.Row="0"
             Height="60"
@@ -29,12 +23,12 @@
                 Foreground="White"
                 Text="Task Manager" />
             <TextBox
+                Name="searchbox"
                 Width="400"
                 Height="40"
                 VerticalAlignment="Top"
                 HorizontalContentAlignment="Left"
                 Style="{StaticResource CustomTextBox}"
-                Name="searchbox"
                 Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
                     <KeyBinding
@@ -67,7 +61,6 @@
                 Style="{StaticResource Rounded3DButtonStyle}" />
         </DockPanel>
 
-        <!--  Content Section  -->
         <Grid Grid.Row="1" Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -78,7 +71,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--  Low Priority  -->
             <GroupBox
                 Grid.Row="0"
                 Grid.Column="0"
@@ -136,8 +128,6 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </GroupBox>
-
-            <!--  Critical Priority  -->
             <GroupBox
                 Grid.Row="1"
                 Grid.Column="1"

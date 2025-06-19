@@ -16,7 +16,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  Header Section  -->
         <DockPanel
             Height="60"
             Margin="10"
@@ -31,13 +30,13 @@
                 Text="Task History" />
         </DockPanel>
 
-        <!--  Content Section  -->
+       
         <ScrollViewer
             Grid.Row="1"
             Margin="20"
             VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <!--  Critical Priority Section  -->
+               
                 <GroupBox
                     Background="{StaticResource CriticalPriorityBrush}"
                     Header="Critical Priority"
@@ -54,7 +53,6 @@
                     </ListBox>
                 </GroupBox>
 
-                <!--  High Priority Section  -->
                 <GroupBox
                     Background="{StaticResource HighPriorityBrush}"
                     Header="High Priority"
@@ -70,8 +68,6 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </GroupBox>
-
-                <!--  Medium Priority Section  -->
                 <GroupBox
                     Background="{StaticResource MediumPriorityBrush}"
                     Header="Medium Priority"
@@ -87,8 +83,6 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </GroupBox>
-
-                <!--  Low Priority Section  -->
                 <GroupBox
                     Background="{StaticResource LowPriorityBrush}"
                     Header="Low Priority"
