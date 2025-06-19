@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media;
 using todolist_mvvm.Data;
 using todolist_mvvm.model;
 
@@ -147,5 +150,6 @@ namespace todolist_mvvm.viewmodel
             // Close window; parent will refresh after ShowDialog
             window.Close();
         }
+       
     }
 }

@@ -71,7 +71,7 @@
             Command="{Binding AddNewTask}"
             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
             Content=" Add "
-            Style="{StaticResource Rounded3DButtonStyle}" />
+            Style="{StaticResource Rounded3DButtonStyle}" Margin="25,5,25,5" />
 
     </Grid>
 </Window>

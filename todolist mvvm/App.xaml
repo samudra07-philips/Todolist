@@ -11,8 +11,8 @@
                 <ResourceDictionary Source="/Resources/Textboxstyles.xaml" />
                 <ResourceDictionary Source="/Resources/Buttonstyles.xaml" />
                 <!--<ResourceDictionary Source="/Resources/TextBoxWithWatermark.xaml"/>-->
-                <ResourceDictionary Source="/Resources/ComboBox.xaml"/>
-                <ResourceDictionary Source="/Resources/TaskTemplate.xaml"/>
+                <ResourceDictionary Source="/Resources/ComboBox.xaml" />
+                <ResourceDictionary Source="/Resources/ToDoStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

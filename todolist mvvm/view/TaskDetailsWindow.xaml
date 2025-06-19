@@ -14,53 +14,62 @@
     Icon="/Resources/Assets/Images/icon.ico"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-    
+
     <Grid Margin="10" Background="{StaticResource bgimage2}">
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
 
         </Grid.RowDefinitions>
 
         <TextBox
-            Grid.Row="0"
-            Margin="0,0,0,10"
-            FontSize="16"
+            Grid.Row="1"
+            Style="{StaticResource CustomTextBox}"
             IsReadOnly="{Binding IsReadOnly}"
-            Text="{Binding Task.Name, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Task.Name, UpdateSourceTrigger=PropertyChanged}"
+            />
 
 
         <TextBox
-            Grid.Row="1"
-            Margin="0,0,0,10"
+            Grid.Row="2"
             AcceptsReturn="True"
+            Height="200"
             IsReadOnly="{Binding IsReadOnly}"
+            Style="{StaticResource CustomTextBox}"
             Text="{Binding Task.Description, UpdateSourceTrigger=PropertyChanged}"
             VerticalScrollBarVisibility="Auto" />
 
         <DockPanel
-            Grid.Row="2"
-            Margin="0,10,0,0"
-            HorizontalAlignment="Center"
+            Grid.Row="3"
+            Margin="123,3,0,7"
+            HorizontalAlignment="Left"
             LastChildFill="False">
             <Button
                 Margin="5,0"
+                Padding="8"
                 Command="{Binding EditCommand}"
                 Content="Edit"
                 Style="{StaticResource Rounded3DButtonStyle}" />
             <Button
                 Margin="5,0"
+                Padding="8"
                 Command="{Binding SaveCommand}"
                 Content="Save"
                 Style="{StaticResource Rounded3DButtonStyle}" />
             <Button
                 Margin="5,0"
+                Padding="8"
                 Command="{Binding DeleteCommand}"
                 Content="Delete"
                 Style="{StaticResource Rounded3DButtonStyle}" />
             <Button
+                Width="115"
                 Margin="5,0"
+                Padding="8"
                 Command="{Binding MarkCompletedCommand}"
                 Content="Mark Completed"
                 Style="{StaticResource Rounded3DButtonStyle}" />

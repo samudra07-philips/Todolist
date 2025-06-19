@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="To Do List"
-    Width="1200"
-    Height="800"
+    Width="900"
+    Height="630"
     MinWidth="800"
     MinHeight="600"
     Icon="/Resources/Assets/Images/icon.ico"
@@ -45,7 +45,7 @@
 
         <Frame
             Name="MainFrame"
-            Margin="40,100,30,130"
+            Margin="20,50,20,20"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             NavigationUIVisibility="Hidden" />
