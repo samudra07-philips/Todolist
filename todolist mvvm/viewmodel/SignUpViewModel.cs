@@ -24,27 +24,7 @@ namespace todolist_mvvm.viewmodel
             {   
                 if (_username != value)
                 {
-                    if (value.Length < 5 || value.Length > 20)
-                    {
-                        MessageBox.Show(
-                            "Username must be between 5 and 20 characters.",
-                            "Error",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error
-                        );
-                        return;
-                    }
-                    var isValid = Regex.IsMatch(value, @"^[a-zA-Z0-9_]*$");
-                    if (!isValid)
-                    {
-                        MessageBox.Show(
-                            "Invalid username! Only alphanumeric characters and underscores are allowed.",
-                            "Error",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error
-                        );
-                        return;
-                    }
+                    
                     _username = value;
                     OnPropertyChanged(nameof(Username));
                     SignupCommand.RaiseCanExecuteChanged();
@@ -59,16 +39,7 @@ namespace todolist_mvvm.viewmodel
             {
                 if (_password != value)
                 {
-                    if (value.Length < 8 || value.Length > 15)
-                    {
-                        MessageBox.Show(
-                            "Password must be between 8 and 15 characters.",
-                            "Error",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error
-                        );
-                        return;
-                    }
+                    
                     _password = value;
                     OnPropertyChanged(nameof(Password));
                     SignupCommand.RaiseCanExecuteChanged();
@@ -105,61 +76,74 @@ namespace todolist_mvvm.viewmodel
                 || string.IsNullOrEmpty(Confirmpassword)
             )
             {
-                MessageBox.Show(
-                    "Invalid Credentials! Please fill in all fields.",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                MessageBox.Show("Invalid Credentials! Please fill in all fields.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (Username.Length < 5 || Username.Length > 20)
+            {
+                MessageBox.Show("Username must be between 5 and 20 characters.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (!Regex.IsMatch(Username, @"^[a-zA-Z0-9_]*$"))
+            {
+                MessageBox.Show("Invalid username! Only alphanumeric characters and underscores are allowed.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (Password.Length < 8 || Password.Length > 15)
+            {
+                MessageBox.Show("Password must be 8–15 characters long.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (Password != Confirmpassword)
             {
-                MessageBox.Show(
-                    "Passwords do not match!",
-                    "Warning",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
+                MessageBox.Show("Passwords do not match!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Hash the password
             string passwordHash = HashPassword(Password);
 
-            // Save to database
             using (var context = new AppDbContext())
             {
-                if (context.Users.Any(u => u.Username == Username))
+                using (var transaction = context.Database.BeginTransaction())
                 {
-                    MessageBox.Show(
-                        "This username is already taken.",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                    return;
+                    try
+                    {
+                        if (context.Users.Any(u => u.Username == Username))
+                        {
+                            MessageBox.Show("This username is already taken.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        var user = new User { Username = Username, PasswordHash = passwordHash };
+                        context.Users.Add(user);
+                        context.SaveChanges();
+
+                        transaction.Commit();
+
+                        MessageBox.Show("Your account has been successfully created!\nPlease log in to your account!", "Account Created", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        if (parameter is Page page)
+                        {
+                            Username = string.Empty;
+                            Password = string.Empty;
+                            Confirmpassword = string.Empty;
+
+                            page.NavigationService.Navigate(new LoginPage());
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-
-                var user = new User { Username = Username, PasswordHash = passwordHash };
-
-                context.Users.Add(user);
-                context.SaveChanges();
-            }
-
-            // Navigate to login page
-            if (parameter is Page page)
-            {
-                MessageBox.Show(
-                    "Your account has been successfully created!\n Please log in to your account!",
-                    "Account Created",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
-                page.NavigationService.Navigate(new LoginPage());
             }
         }
+
 
         private string HashPassword(string password)
         {

@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:todolist_mvvm.view"
-    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="Add New Task"
     Width="600"
     Height="400"
@@ -15,14 +15,15 @@
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Window.DataContext>
-        <vm:AddTaskWindowViewModel/>
+        <vm:AddTaskWindowViewModel />
     </Window.DataContext>
     <Window.InputBindings>
-        <KeyBinding Gesture="Enter" Command="{Binding AddNewTask}"/>
+        <KeyBinding Command="{Binding AddNewTask}" Gesture="Enter" />
     </Window.InputBindings>
     <Grid Background="{StaticResource bgimage2}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -35,27 +36,37 @@
         </Grid.ColumnDefinitions>
         <TextBox
             Name="Taskname"
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.ColumnSpan="3"
             Background="{StaticResource addtaskwatermark}"
             Style="{StaticResource CustomTextBox}"
+            Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
             TextChanged="Taskname_TextChanged"
-            Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap" />
         <TextBox
             Name="Add_descripton"
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.ColumnSpan="3"
             Height="Auto"
             MinHeight="80"
             Background="{StaticResource Descriptionwatermark}"
             Style="{StaticResource CustomTextBox}"
+            Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
             TextChanged="Add_descripton_TextChanged"
-            Text="{Binding Description,UpdateSourceTrigger=PropertyChanged}"
             TextWrapping="Wrap" />
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            ItemsSource="{Binding Priorities}"
+            SelectedItem="{Binding SelectedPriority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Style="{DynamicResource CustomComboBoxStyle}"
+            />
+
         <Button
             Name="addtaskbutton"
-            Grid.Row="3"
+            Grid.Row="4"
             Grid.Column="1"
             Command="{Binding AddNewTask}"
             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"

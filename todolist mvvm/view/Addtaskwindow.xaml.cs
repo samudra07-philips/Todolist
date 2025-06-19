@@ -18,7 +18,7 @@ namespace todolist_mvvm.view
     /// <summary>
     /// Interaction logic for Addtaskwindow.xaml
     /// </summary>
-    public partial class Addtaskwindow : Window, IRefreshablePage
+    public partial class Addtaskwindow : Window
     {
         public Addtaskwindow()
         {

@@ -12,7 +12,7 @@
         <vm:LoginPageViewModel />
     </Page.DataContext>
     <Page.InputBindings>
-        <KeyBinding Gesture="Enter" Command="{Binding LoginCommand}" />
+        <KeyBinding Command="{Binding LoginCommand}" Gesture="Enter" />
     </Page.InputBindings>
     <Grid>
 
@@ -36,9 +36,9 @@
             Name="textboxsample"
             Grid.Row="1"
             Grid.ColumnSpan="4"
-            Background="{StaticResource Textwatermark}"
-            Style="{StaticResource CustomTextBox}"
+            Background="{DynamicResource Textwatermark}"
             MaxLength="20"
+            Style="{StaticResource CustomTextBox}"
             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
             TextChanged="textboxsample_TextChanged" />
 
@@ -46,8 +46,8 @@
             Name="passboxsample"
             Grid.Row="2"
             Grid.ColumnSpan="4"
-            MaxLength="15"
-            Background="{StaticResource PasswordHint}"
+            Background="{DynamicResource PasswordHint}"
+            MaxLength="30"
             PasswordChanged="OnPasswordChanged"
             Style="{StaticResource CustomPasswordBox}" />
 

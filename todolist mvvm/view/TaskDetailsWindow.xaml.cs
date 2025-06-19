@@ -10,29 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using todolist_mvvm.model;
 using todolist_mvvm.viewmodel;
 
 namespace todolist_mvvm.view
 {
     /// <summary>
-    /// Interaction logic for Todo.xaml
+    /// Interaction logic for TaskDetails.xaml
     /// </summary>
-    public partial class Todo : Page
+    public partial class TaskDetails : Window
     {
-        public Todo()
+        
+
+        public TaskDetails(Tasks task)
         {
             InitializeComponent();
-            DataContext=new ToDoViewModel();
+            DataContext=new TaskDetailsViewModel(task,this);
         }
-        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (DataContext is ToDoViewModel vm && vm.OpenTaskDetailsCommand.CanExecute(null))
-            {
-                vm.OpenTaskDetailsCommand.Execute(null);
-            }
-        }
-
     }
 }

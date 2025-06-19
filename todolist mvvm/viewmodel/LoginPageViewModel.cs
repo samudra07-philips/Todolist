@@ -102,6 +102,8 @@ namespace todolist_mvvm.viewmodel
         {
             if (parameter is Page page)
             {
+                Username = string.Empty;
+                Password = string.Empty;
                 page.NavigationService.Navigate(new Signup());
             }
         }

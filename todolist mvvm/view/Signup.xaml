@@ -4,17 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:todolist_mvvm.view"
-    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
     Title="Signup"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Page.DataContext>
-        <vm:SignUpViewModel/>
+        <vm:SignUpViewModel />
     </Page.DataContext>
     <Page.InputBindings>
-        <KeyBinding Gesture="Enter" Command="{Binding SignupCommand}" />
+        <KeyBinding Command="{Binding SignupCommand}" Gesture="Enter" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -37,18 +37,18 @@
             Grid.Row="1"
             Grid.ColumnSpan="4"
             HorizontalContentAlignment="Center"
-            Background="{StaticResource Textwatermark1}"
-            Style="{StaticResource Custombox}"
+            Background="{DynamicResource Textwatermark1}"
             MaxLength="20"
-            TextChanged="textboxsignup_TextChanged" 
-            Text="{Binding Username,UpdateSourceTrigger=PropertyChanged}"/>
+            Style="{StaticResource Custombox}"
+            Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+            TextChanged="textboxsignup_TextChanged" />
 
         <PasswordBox
             Name="passboxsignup"
             Grid.Row="2"
             Grid.ColumnSpan="4"
-            Background="{StaticResource PasswordHint}"
-            MaxLength="15"
+            Background="{DynamicResource PasswordHint}"
+            MaxLength="30"
             PasswordChanged="passboxsignup_PasswordChanged"
             Style="{StaticResource CustomPasswordBox}" />
 
@@ -56,8 +56,8 @@
             Name="checkpassboxsignup"
             Grid.Row="3"
             Grid.ColumnSpan="4"
-            MaxLength="15"
-            Background="{StaticResource confirmpass}"
+            Background="{DynamicResource confirmpass}"
+            MaxLength="30"
             PasswordChanged="checkpassboxsignup_PasswordChanged"
             Style="{StaticResource CustomPasswordBox}" />
 

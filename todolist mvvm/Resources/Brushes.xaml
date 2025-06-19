@@ -16,7 +16,7 @@
                 FontSize="15"
                 FontWeight="Light"
                 Foreground="Gray"
-                Text=" ENTER YOUR PASSWORD" />
+                Text=" ENTER YOUR PASSWORD " />
         </VisualBrush.Visual>
     </VisualBrush>
     <VisualBrush
@@ -68,7 +68,7 @@
                 FontSize="15"
                 FontWeight="Light"
                 Foreground="Gray"
-                Text=" ENTER YOUR NAME" />
+                Text=" ENTER YOUR NAME (5 TO 20 CHARACTERS and only '_' is allowed)" />
         </VisualBrush.Visual>
     </VisualBrush>
 

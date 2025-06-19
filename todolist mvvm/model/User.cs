@@ -21,5 +21,6 @@ namespace todolist_mvvm.model
         public string PasswordHash { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public virtual ICollection<Tasks> Tasks { get; set; } = new List<Tasks>();
     }
 }

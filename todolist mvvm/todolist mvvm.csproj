@@ -80,7 +80,16 @@
     <Compile Include="Migrations\202506180750165_InitialCreate.Designer.cs">
       <DependentUpon>202506180750165_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202506181837214_AddUserTasksRelationship.cs" />
+    <Compile Include="Migrations\202506181837214_AddUserTasksRelationship.Designer.cs">
+      <DependentUpon>202506181837214_AddUserTasksRelationship.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202506190959466_AddCompletionFieldsToTasks.cs" />
+    <Compile Include="Migrations\202506190959466_AddCompletionFieldsToTasks.Designer.cs">
+      <DependentUpon>202506190959466_AddCompletionFieldsToTasks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="model\Task.cs" />
     <Compile Include="model\User.cs" />
     <Compile Include="viewmodel\AddTaskWindowViewModel.cs" />
     <Compile Include="viewmodel\BaseViewModel.cs" />
@@ -88,6 +97,7 @@
     <Compile Include="viewmodel\MainWindowViewModel.cs" />
     <Compile Include="viewmodel\RelayCommand.cs" />
     <Compile Include="viewmodel\SignUpViewModel.cs" />
+    <Compile Include="viewmodel\TaskDetailsViewModel.cs" />
     <Compile Include="viewmodel\ToDoViewModel.cs" />
     <Compile Include="view\Addtaskwindow.xaml.cs">
       <DependentUpon>Addtaskwindow.xaml</DependentUpon>
@@ -97,6 +107,9 @@
     </Compile>
     <Compile Include="view\Signup.xaml.cs">
       <DependentUpon>Signup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\TaskDetailsWindow.xaml.cs">
+      <DependentUpon>TaskDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\Todo.xaml.cs">
       <DependentUpon>Todo.xaml</DependentUpon>
@@ -122,6 +135,12 @@
     <EmbeddedResource Include="Migrations\202506180750165_InitialCreate.resx">
       <DependentUpon>202506180750165_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202506181837214_AddUserTasksRelationship.resx">
+      <DependentUpon>202506181837214_AddUserTasksRelationship.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202506190959466_AddCompletionFieldsToTasks.resx">
+      <DependentUpon>202506190959466_AddCompletionFieldsToTasks.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -142,6 +161,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Buttonstyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\TaskTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -166,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\Signup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\TaskDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
