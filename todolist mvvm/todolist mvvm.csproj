@@ -93,6 +93,7 @@
     <Compile Include="model\User.cs" />
     <Compile Include="viewmodel\AddTaskWindowViewModel.cs" />
     <Compile Include="viewmodel\BaseViewModel.cs" />
+    <Compile Include="viewmodel\HistoryPageViewModel.cs" />
     <Compile Include="viewmodel\LoginPageViewModel.cs" />
     <Compile Include="viewmodel\MainWindowViewModel.cs" />
     <Compile Include="viewmodel\RelayCommand.cs" />
@@ -101,6 +102,9 @@
     <Compile Include="viewmodel\ToDoViewModel.cs" />
     <Compile Include="view\Addtaskwindow.xaml.cs">
       <DependentUpon>Addtaskwindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\Historypage.xaml.cs">
+      <DependentUpon>Historypage.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\loginpage.xaml.cs">
       <DependentUpon>loginpage.xaml</DependentUpon>
@@ -177,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ToDoStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\Historypage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

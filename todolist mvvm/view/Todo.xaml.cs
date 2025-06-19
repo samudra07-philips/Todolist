@@ -19,13 +19,14 @@ namespace todolist_mvvm.view
     /// <summary>
     /// Interaction logic for Todo.xaml
     /// </summary>
-    public partial class Todo : Page
+    public partial class Todo : Page, IRefreshablePage
     {
         public Todo()
         {
             InitializeComponent();
-            DataContext=new ToDoViewModel();
+            DataContext = new ToDoViewModel();
         }
+
         private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is ToDoViewModel vm && vm.OpenTaskDetailsCommand.CanExecute(null))
@@ -34,5 +35,12 @@ namespace todolist_mvvm.view
             }
         }
 
+        public void RefreshContent()
+        {
+            if (DataContext is ToDoViewModel vm)
+            {
+                vm.SearchQuery = string.Empty;
+            }
+        }
     }
 }

@@ -71,6 +71,8 @@
                 Text=" ENTER YOUR NAME (5 TO 20 CHARACTERS and only '_' is allowed)" />
         </VisualBrush.Visual>
     </VisualBrush>
+   
+
 
     <VisualBrush
         x:Key="confirmpass"

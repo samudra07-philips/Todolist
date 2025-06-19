@@ -28,6 +28,32 @@
                 FontWeight="Bold"
                 Foreground="White"
                 Text="Task Manager" />
+            <TextBox
+                Width="400"
+                Height="40"
+                VerticalAlignment="Top"
+                HorizontalContentAlignment="Left"
+                Style="{StaticResource CustomTextBox}"
+                Name="searchbox"
+                Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding
+                        Key="Enter"
+                        Command="{Binding SearchCommand}"
+                        CommandParameter="{Binding SearchQuery}" />
+                </TextBox.InputBindings>
+            </TextBox>
+            <Button
+                Width="90"
+                Height="40"
+                Margin="10,10,10,10"
+                Padding="10,10,10,10"
+                HorizontalAlignment="Right"
+                Command="{Binding OpenHistoryPage}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}"
+                Content=" History "
+                DockPanel.Dock="Right"
+                Style="{StaticResource Rounded3DButtonStyle}" />
             <Button
                 Width="90"
                 Height="40"

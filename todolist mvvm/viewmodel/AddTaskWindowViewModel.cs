@@ -110,12 +110,7 @@ namespace todolist_mvvm.viewmodel
                     context.Tasks.Add(task);
                     context.SaveChanges();
 
-                    MessageBox.Show(
-                        "Task added successfully!",
-                        "Success",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Information
-                    );
+                   
 
                     if (window is IRefreshablePage refreshable)
                     {

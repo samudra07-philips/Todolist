@@ -1,7 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using todolist_mvvm.Data;
 using todolist_mvvm.model;
 using todolist_mvvm.view;
@@ -36,21 +38,24 @@ namespace todolist_mvvm.viewmodel
 
         public RelayCommand OpenTaskDetailsCommand { get; }
         public RelayCommand AddCommand { get; }
-
+        public RelayCommand OpenHistoryPage { get; }
         public ToDoViewModel()
         {
             LoadTasks();
             OpenTaskDetailsCommand = new RelayCommand(OpenTaskDetails, _ => SelectedTask != null);
             AddCommand = new RelayCommand(ExecuteAdd, _ => true);
+            SearchCommand = new RelayCommand(ExecuteSearch);
+            OpenHistoryPage = new RelayCommand(OpenHistory);
         }
 
         public void RefreshContent()
         {
-            // Clear existing so UI sees removals
+            
             LowPriorityTasks.Clear();
             MediumPriorityTasks.Clear();
             HighPriorityTasks.Clear();
             CriticalPriorityTasks.Clear();
+            SearchQuery = string.Empty;
             LoadTasks();
         }
 
@@ -113,16 +118,87 @@ namespace todolist_mvvm.viewmodel
             if (SelectedTask == null)
                 return;
 
-            
             var detailsWindow = new TaskDetails(selectedTask);
-            
+
             detailsWindow.DataContext = new TaskDetailsViewModel(SelectedTask, detailsWindow);
             detailsWindow.Owner = Window.GetWindow(
                 Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)
             );
-            
+
             detailsWindow.ShowDialog();
             RefreshContent();
+        }
+
+        private string searchQuery;
+
+        public string SearchQuery
+        {
+            get => searchQuery;
+            set
+            {
+                searchQuery = value;
+                OnPropertyChanged(nameof(SearchQuery));
+            }
+        }
+
+        public ICommand SearchCommand { get; }
+
+        private void ExecuteSearch(object parameter)
+        {
+            if (parameter is string query && !string.IsNullOrWhiteSpace(query))
+            {
+               
+                var task =
+                    LowPriorityTasks.FirstOrDefault(t =>
+                        t.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0
+                    )
+                    ?? MediumPriorityTasks.FirstOrDefault(t =>
+                        t.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0
+                    )
+                    ?? HighPriorityTasks.FirstOrDefault(t =>
+                        t.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0
+                    )
+                    ?? CriticalPriorityTasks.FirstOrDefault(t =>
+                        t.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0
+                    );
+                
+                if (task != null)
+                {
+                    
+                    // Open the task details window for the found task
+                    OpenTaskWindow(task);
+                }
+                else
+                {
+                    
+                    MessageBox.Show(
+                        "Task not found.",
+                        "Search Result",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
+                }
+            }
+        }
+
+        private void OpenTaskWindow(Tasks task)
+        {
+            var detailsWindow = new TaskDetails(task);
+
+            detailsWindow.DataContext = new TaskDetailsViewModel(task, detailsWindow);
+            detailsWindow.Owner = Window.GetWindow(
+                Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)
+            );
+
+            detailsWindow.ShowDialog();
+            RefreshContent();
+        }
+        public void OpenHistory(object parameter)
+        {
+            if(parameter is Page page)
+            {
+                page.NavigationService.Navigate(new Historypage());
+            }
         }
     }
 }

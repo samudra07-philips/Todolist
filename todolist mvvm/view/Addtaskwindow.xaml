@@ -47,13 +47,14 @@
             Name="Add_descripton"
             Grid.Row="3"
             Grid.ColumnSpan="3"
-            Height="Auto"
-            MinHeight="80"
+            Height="150"
+            AcceptsReturn="True"
             Background="{StaticResource Descriptionwatermark}"
             Style="{StaticResource CustomTextBox}"
             Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
             TextChanged="Add_descripton_TextChanged"
-            TextWrapping="Wrap" />
+            
+            VerticalScrollBarVisibility="Auto" />
         <ComboBox
             Grid.Row="1"
             Grid.Column="1"
@@ -61,17 +62,17 @@
             VerticalAlignment="Center"
             ItemsSource="{Binding Priorities}"
             SelectedItem="{Binding SelectedPriority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Style="{DynamicResource CustomComboBoxStyle}"
-            />
+            Style="{DynamicResource CustomComboBoxStyle}" />
 
         <Button
             Name="addtaskbutton"
             Grid.Row="4"
             Grid.Column="1"
+            Margin="25,5,25,5"
             Command="{Binding AddNewTask}"
             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
             Content=" Add "
-            Style="{StaticResource Rounded3DButtonStyle}" Margin="25,5,25,5" />
+            Style="{StaticResource Rounded3DButtonStyle}" />
 
     </Grid>
 </Window>
