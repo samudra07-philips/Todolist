@@ -18,7 +18,7 @@
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
-    <Grid>
+    <Grid Background="{StaticResource bgimage}">
         <Button
             Width="30"
             Height="30"

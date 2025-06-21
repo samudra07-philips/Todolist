@@ -20,7 +20,7 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding AddNewTask}" Gesture="Enter" />
     </Window.InputBindings>
-    <Grid Background="{StaticResource bgimage2}">
+    <Grid Background="{DynamicResource bgimage}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />

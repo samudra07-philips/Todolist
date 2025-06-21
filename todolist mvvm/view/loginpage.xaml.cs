@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using todolist_mvvm.viewmodel;
-
+using todolist_mvvm.Bussiness_Layer;
 namespace todolist_mvvm.view
 {
     ///<summary>
@@ -34,6 +34,7 @@ namespace todolist_mvvm.view
         public LoginPage()
         {
             InitializeComponent();
+            CurrentUser.Clear();
             
         }
 

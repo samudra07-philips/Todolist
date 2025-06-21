@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Bussiness Layer\CurrentUser.cs" />
     <Compile Include="Bussiness Layer\Helpers\PasswordBoxHelper.cs" />
     <Compile Include="Bussiness Layer\Helpers\PasswordHasher.cs" />
     <Compile Include="Bussiness Layer\Interfaces\Irefreshinterface.cs" />

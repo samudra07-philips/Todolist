@@ -15,7 +15,7 @@
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
 
-    <Grid Margin="10" Background="{StaticResource bgimage2}">
+    <Grid Background="{DynamicResource bgimage}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

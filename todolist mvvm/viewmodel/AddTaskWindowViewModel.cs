@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using todolist_mvvm.Data;
 using todolist_mvvm.model;
+using todolist_mvvm.Bussiness_Layer;
 
 namespace todolist_mvvm.viewmodel
 {
@@ -104,7 +105,7 @@ namespace todolist_mvvm.viewmodel
                         Name = Title,
                         Description = Description,
                         Priority = parsedPriority,
-                        UserId = 1 // Update this logic if dynamic user IDs are needed
+                        UserId = CurrentUser.Id
                     };
 
                     context.Tasks.Add(task);

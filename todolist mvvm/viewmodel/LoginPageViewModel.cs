@@ -7,7 +7,9 @@ using System.Windows.Controls;
 using todolist_mvvm.Data;
 using todolist_mvvm.view;
 using todolist_mvvm.model;
+using todolist_mvvm.Bussiness_Layer;
 namespace todolist_mvvm.viewmodel
+
 {
     public class LoginPageViewModel : BaseViewModel
     {
@@ -88,6 +90,8 @@ namespace todolist_mvvm.viewmodel
                     );
                     return;
                 }
+                CurrentUser.SetUser(user.Id, user.Username);
+                //Console.WriteLine(user.Username);
             }
 
             

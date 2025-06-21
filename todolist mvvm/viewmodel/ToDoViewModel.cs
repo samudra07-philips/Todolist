@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using todolist_mvvm.Bussiness_Layer;
 using todolist_mvvm.Data;
 using todolist_mvvm.model;
 using todolist_mvvm.view;
@@ -64,7 +65,7 @@ namespace todolist_mvvm.viewmodel
             using (var context = new AppDbContext())
             {
                 var tasks = context
-                    .Tasks.Where(t => !t.IsCompleted) // show only pending; adjust as needed
+                    .Tasks.Where(t => !t.IsCompleted && t.UserId==CurrentUser.Id) // show only pending; adjust as needed
                     .ToList();
 
                 foreach (var task in tasks)

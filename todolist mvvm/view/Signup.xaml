@@ -14,7 +14,10 @@
         <vm:SignUpViewModel />
     </Page.DataContext>
     <Page.InputBindings>
-        <KeyBinding Command="{Binding SignupCommand}" Gesture="Enter" />
+        <KeyBinding
+        Key="Enter"
+        Command="{Binding SignupCommand}"
+        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using todolist_mvvm.Data;
 using todolist_mvvm.model;
+using todolist_mvvm.Bussiness_Layer;
 
 namespace todolist_mvvm.viewmodel
 {
@@ -26,11 +27,11 @@ namespace todolist_mvvm.viewmodel
             LoadTasks();
         }
         private void LoadTasks()
-        {
+        {   
             using (var context = new AppDbContext())
             {
                 var tasks = context
-                    .Tasks.Where(t => t.IsCompleted) 
+                    .Tasks.Where(t => t.IsCompleted && t.UserId == CurrentUser.Id) 
                     .ToList();
 
                 foreach (var t in tasks)
