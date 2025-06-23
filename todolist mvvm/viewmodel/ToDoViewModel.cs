@@ -40,6 +40,8 @@ namespace todolist_mvvm.viewmodel
         public RelayCommand OpenTaskDetailsCommand { get; }
         public RelayCommand AddCommand { get; }
         public RelayCommand OpenHistoryPage { get; }
+        public RelayCommand LogoutCommand { get; }
+
         public ToDoViewModel()
         {
             LoadTasks();
@@ -47,11 +49,11 @@ namespace todolist_mvvm.viewmodel
             AddCommand = new RelayCommand(ExecuteAdd, _ => true);
             SearchCommand = new RelayCommand(ExecuteSearch);
             OpenHistoryPage = new RelayCommand(OpenHistory);
+            LogoutCommand = new RelayCommand(ExecuteLogout);
         }
 
         public void RefreshContent()
         {
-            
             LowPriorityTasks.Clear();
             MediumPriorityTasks.Clear();
             HighPriorityTasks.Clear();
@@ -65,7 +67,7 @@ namespace todolist_mvvm.viewmodel
             using (var context = new AppDbContext())
             {
                 var tasks = context
-                    .Tasks.Where(t => !t.IsCompleted && t.UserId==CurrentUser.Id) // show only pending; adjust as needed
+                    .Tasks.Where(t => !t.IsCompleted && t.UserId == CurrentUser.Id) // show only pending; adjust as needed
                     .ToList();
 
                 foreach (var task in tasks)
@@ -148,7 +150,6 @@ namespace todolist_mvvm.viewmodel
         {
             if (parameter is string query && !string.IsNullOrWhiteSpace(query))
             {
-               
                 var task =
                     LowPriorityTasks.FirstOrDefault(t =>
                         t.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0
@@ -162,16 +163,14 @@ namespace todolist_mvvm.viewmodel
                     ?? CriticalPriorityTasks.FirstOrDefault(t =>
                         t.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0
                     );
-                
+
                 if (task != null)
                 {
-                    
                     // Open the task details window for the found task
                     OpenTaskWindow(task);
                 }
                 else
                 {
-                    
                     MessageBox.Show(
                         "Task not found.",
                         "Search Result",
@@ -194,12 +193,41 @@ namespace todolist_mvvm.viewmodel
             detailsWindow.ShowDialog();
             RefreshContent();
         }
+
         public void OpenHistory(object parameter)
         {
-            if(parameter is Page page)
+            if (parameter is Page page)
             {
                 page.NavigationService.Navigate(new Historypage());
             }
         }
+        private void ExecuteLogout(object parameter)
+        {
+            CurrentUser.Clear();
+
+            if (Application.Current.MainWindow is Mainwindow main && main.MainFrame != null)
+            {
+                var nav = main.MainFrame.NavigationService;
+                while (nav.RemoveBackEntry() != null) { } main.MainFrame.Content = new LoginPage();
+            }
+            else if (parameter is Page page && page.NavigationService != null)
+            {
+                var nav = page.NavigationService;
+                while (nav.RemoveBackEntry() != null) { }
+                var frame = Window.GetWindow(page)
+                                  ?.FindName("MainFrame") as Frame;
+                if (frame != null)
+                {
+                    frame.Content = new LoginPage();
+                }
+                else
+                {
+                    page.NavigationService.Navigate(new LoginPage());
+                    while (page.NavigationService.RemoveBackEntry() != null) { }
+                }
+            }
+        }
+
+
     }
 }

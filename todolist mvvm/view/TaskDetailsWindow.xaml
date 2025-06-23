@@ -38,6 +38,7 @@
             Grid.Row="2"
             AcceptsReturn="True"
             Height="200"
+           
             IsReadOnly="{Binding IsReadOnly}"
             Style="{StaticResource CustomTextBox}"
             Text="{Binding Task.Description, UpdateSourceTrigger=PropertyChanged}"
@@ -45,8 +46,8 @@
 
         <DockPanel
             Grid.Row="3"
-            Margin="123,3,0,7"
-            HorizontalAlignment="Left"
+            Margin="0,8,0,5"
+            HorizontalAlignment="Center"
             LastChildFill="False">
             <Button
                 Margin="5,0"

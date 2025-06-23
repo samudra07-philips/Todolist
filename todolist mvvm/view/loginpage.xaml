@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:todolist_mvvm"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
+    JournalEntry.KeepAlive="False"
     Title="Login Page"
     mc:Ignorable="d">
     <Page.DataContext>
