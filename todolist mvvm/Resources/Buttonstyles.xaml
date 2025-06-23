@@ -1,4 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="SecondaryTextBrush1" Color="#666666" />
+
     <Style x:Key="Rounded3DButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontSize" Value="12" />
@@ -16,7 +18,7 @@
                         BorderBrush="Gray"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="10">
-                        <!--  Applying the OpacityMask directly to the Border  -->
+
                         <Border.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Offset="0" Color="LightGray" />
@@ -50,6 +52,31 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="EditButtonStyle"
+        BasedOn="{StaticResource Rounded3DButtonStyle}"
+        TargetType="Button">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsEditing}" Value="True">
+                <Setter Property="Background" Value="LightGray" />
+                <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush1}" />
+                <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style
+        x:Key="SaveButtonStyle"
+        BasedOn="{StaticResource Rounded3DButtonStyle}"
+        TargetType="Button">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsEditing}" Value="False">
+                <Setter Property="Background" Value="LightGray" />
+                <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush1}" />
+                <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 

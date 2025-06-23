@@ -48,6 +48,7 @@
                 Content=" History "
                 DockPanel.Dock="Right"
                 Style="{StaticResource Rounded3DButtonStyle}" />
+            
             <Button
                 Width="90"
                 Height="40"

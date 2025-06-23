@@ -53,13 +53,13 @@
                 Padding="8"
                 Command="{Binding EditCommand}"
                 Content="Edit"
-                Style="{StaticResource Rounded3DButtonStyle}" />
+                Style="{StaticResource EditButtonStyle}" />
             <Button
                 Margin="5,0"
                 Padding="8"
                 Command="{Binding SaveCommand}"
                 Content="Save"
-                Style="{StaticResource Rounded3DButtonStyle}" />
+                Style="{StaticResource SaveButtonStyle}" />
             <Button
                 Margin="5,0"
                 Padding="8"
