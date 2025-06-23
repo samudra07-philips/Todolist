@@ -95,7 +95,7 @@ namespace todolist_mvvm.viewmodel
                 MessageBoxButton.OK,
                 MessageBoxImage.Information
             );
-            window.Close();
+            
         }
 
         private void Delete()
