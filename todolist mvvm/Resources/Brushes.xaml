@@ -20,6 +20,18 @@
         </VisualBrush.Visual>
     </VisualBrush>
     <VisualBrush
+    x:Key="PasswordHint1"
+    Opacity="1"
+    Stretch="None">
+        <VisualBrush.Visual>
+            <TextBlock
+            FontSize="15"
+            FontWeight="Light"
+            Foreground="Gray"
+            Text=" ENTER YOUR PASSWORD (Minimum 8 Characters)" />
+        </VisualBrush.Visual>
+    </VisualBrush>
+    <VisualBrush
         x:Key="Textwatermark"
         Opacity="1"
         Stretch="None">
@@ -68,7 +80,7 @@
                 FontSize="15"
                 FontWeight="Light"
                 Foreground="Gray"
-                Text=" ENTER YOUR NAME (5 TO 20 CHARACTERS and only '_' is allowed)" />
+                Text=" ENTER YOUR NAME (5 TO 20 characters with only '_' is allowed)" />
         </VisualBrush.Visual>
     </VisualBrush>
    

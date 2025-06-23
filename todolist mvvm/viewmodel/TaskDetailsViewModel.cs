@@ -25,7 +25,6 @@ namespace todolist_mvvm.viewmodel
             }
         }
 
-        // True when editing; controls Save button and TextBox read-only state
         public bool IsEditing
         {
             get => isEditing;
@@ -42,7 +41,6 @@ namespace todolist_mvvm.viewmodel
             }
         }
 
-        // TextBoxes are read-only when not editing
         public bool IsReadOnly => !IsEditing;
 
         public RelayCommand EditCommand { get; }
@@ -50,10 +48,7 @@ namespace todolist_mvvm.viewmodel
         public RelayCommand DeleteCommand { get; }
         public RelayCommand MarkCompletedCommand { get; }
 
-        // Parameterless ctor not used; we use the one below
         public TaskDetailsViewModel() { }
-
-        // Constructor takes the selected task and the window instance
         public TaskDetailsViewModel(Tasks selectedTask, Window window)
         {
             Task = selectedTask;
@@ -123,7 +118,7 @@ namespace todolist_mvvm.viewmodel
                     context.SaveChanges();
                 }
             }
-            // Close window; parent will refresh after ShowDialog
+            
             window.Close();
         }
 
@@ -148,7 +143,6 @@ namespace todolist_mvvm.viewmodel
                     context.SaveChanges();
                 }
             }
-            // Close window; parent will refresh after ShowDialog
             window.Close();
         }
        

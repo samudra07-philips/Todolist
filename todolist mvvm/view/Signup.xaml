@@ -50,7 +50,7 @@
             Name="passboxsignup"
             Grid.Row="2"
             Grid.ColumnSpan="4"
-            Background="{DynamicResource PasswordHint}"
+            Background="{DynamicResource PasswordHint1}"
             MaxLength="30"
             PasswordChanged="passboxsignup_PasswordChanged"
             Style="{StaticResource CustomPasswordBox}" />

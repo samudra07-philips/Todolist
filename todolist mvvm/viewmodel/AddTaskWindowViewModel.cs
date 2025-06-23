@@ -79,13 +79,12 @@ namespace todolist_mvvm.viewmodel
         private bool CanExecute(object parameter)
         {
             return !string.IsNullOrEmpty(Title)
-                && !string.IsNullOrEmpty(Description)
                 && !string.IsNullOrEmpty(SelectedPriority);
         }
 
         private void Execute(object parameter)
         {
-            if (string.IsNullOrWhiteSpace(Title) || string.IsNullOrWhiteSpace(Description) || string.IsNullOrWhiteSpace(SelectedPriority))
+            if (string.IsNullOrWhiteSpace(Title) || string.IsNullOrWhiteSpace(SelectedPriority))
             {
                 MessageBox.Show(
                     "All fields are required. Please fill in all details.",
