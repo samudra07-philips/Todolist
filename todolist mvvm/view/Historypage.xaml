@@ -30,13 +30,13 @@
                 Text="Task History" />
         </DockPanel>
 
-       
+
         <ScrollViewer
             Grid.Row="1"
             Margin="20"
             VerticalScrollBarVisibility="Auto">
             <StackPanel>
-               
+
                 <GroupBox
                     Background="{StaticResource CriticalPriorityBrush}"
                     Header="Critical Priority"

@@ -84,7 +84,7 @@ namespace todolist_mvvm.viewmodel
                 {
                     toUpdate.Name = Task.Name;
                     toUpdate.Description = Task.Description;
-                    // Priority unchanged here
+                    
                     context.SaveChanges();
                 }
             }

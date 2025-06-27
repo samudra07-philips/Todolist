@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
-    JournalEntry.KeepAlive="False"
     Title="Todo">
     <Grid Background="{StaticResource PageBackgroundBrush}">
         <Grid.RowDefinitions>
@@ -23,7 +22,7 @@
                 FontWeight="Bold"
                 Foreground="White"
                 Text="Task Manager" />
-            <Button Visibility="Collapsed"
+            <Button
                 Width="70"
                 Height="40"
                 Margin="5"
@@ -33,7 +32,8 @@
                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}"
                 Content=" Logout "
                 DockPanel.Dock="Right"
-                Style="{StaticResource Rounded3DButtonStyle}" />
+                Style="{StaticResource Rounded3DButtonStyle}"
+                Visibility="Collapsed" />
             <Button
                 Width="70"
                 Height="40"
@@ -58,11 +58,12 @@
                 Content=" Add Task "
                 DockPanel.Dock="Right"
                 Style="{StaticResource Rounded3DButtonStyle}" />
+
+
             <TextBox
                 Name="searchbox"
-                
                 Height="35"
-                HorizontalContentAlignment="left"
+                HorizontalContentAlignment="Left"
                 Style="{StaticResource CustomTextBox}"
                 Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
@@ -72,6 +73,7 @@
                         CommandParameter="{Binding SearchQuery}" />
                 </TextBox.InputBindings>
             </TextBox>
+
         </DockPanel>
 
         <Grid Grid.Row="1" Margin="20">
@@ -93,7 +95,7 @@
 
                 <ListBox
                     ItemContainerStyle="{StaticResource TaskListBoxItemStyle}"
-                    ItemsSource="{Binding LowPriorityTasks}"
+                    ItemsSource="{Binding DisplayedLowPriorityTasks}"
                     MouseDoubleClick="ListBox_MouseDoubleClick"
                     SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
                     Style="{StaticResource TaskListBoxStyle}">
@@ -112,7 +114,7 @@
                 Style="{StaticResource PriorityGroupBoxStyle}">
                 <ListBox
                     ItemContainerStyle="{StaticResource TaskListBoxItemStyle}"
-                    ItemsSource="{Binding MediumPriorityTasks}"
+                    ItemsSource="{Binding DisplayedMediumPriorityTasks}"
                     MouseDoubleClick="ListBox_MouseDoubleClick"
                     SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
                     Style="{StaticResource TaskListBoxStyle}">
@@ -132,7 +134,7 @@
                 Style="{StaticResource PriorityGroupBoxStyle}">
                 <ListBox
                     ItemContainerStyle="{StaticResource TaskListBoxItemStyle}"
-                    ItemsSource="{Binding HighPriorityTasks}"
+                    ItemsSource="{Binding DisplayedHighPriorityTasks}"
                     MouseDoubleClick="ListBox_MouseDoubleClick"
                     SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
                     Style="{StaticResource TaskListBoxStyle}">
@@ -149,7 +151,7 @@
                 Style="{StaticResource PriorityGroupBoxStyle}">
                 <ListBox
                     ItemContainerStyle="{StaticResource TaskListBoxItemStyle}"
-                    ItemsSource="{Binding CriticalPriorityTasks}"
+                    ItemsSource="{Binding DisplayedCriticalPriorityTasks}"
                     MouseDoubleClick="ListBox_MouseDoubleClick"
                     SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
                     Style="{StaticResource TaskListBoxStyle}">

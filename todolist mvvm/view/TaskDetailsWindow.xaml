@@ -28,17 +28,15 @@
 
         <TextBox
             Grid.Row="1"
-            Style="{StaticResource CustomTextBox}"
             IsReadOnly="{Binding IsReadOnly}"
-            Text="{Binding Task.Name, UpdateSourceTrigger=PropertyChanged}"
-            />
+            Style="{StaticResource CustomTextBox}"
+            Text="{Binding Task.Name, UpdateSourceTrigger=PropertyChanged}" />
 
 
         <TextBox
             Grid.Row="2"
-            AcceptsReturn="True"
             Height="200"
-           
+            AcceptsReturn="True"
             IsReadOnly="{Binding IsReadOnly}"
             Style="{StaticResource CustomTextBox}"
             Text="{Binding Task.Description, UpdateSourceTrigger=PropertyChanged}"

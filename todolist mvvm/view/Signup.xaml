@@ -15,9 +15,9 @@
     </Page.DataContext>
     <Page.InputBindings>
         <KeyBinding
-        Key="Enter"
-        Command="{Binding SignupCommand}"
-        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}" />
+            Key="Enter"
+            Command="{Binding SignupCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Page}}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

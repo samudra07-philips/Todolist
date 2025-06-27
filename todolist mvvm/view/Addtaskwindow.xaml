@@ -53,7 +53,6 @@
             Style="{StaticResource CustomTextBox}"
             Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
             TextChanged="Add_descripton_TextChanged"
-            
             VerticalScrollBarVisibility="Auto" />
         <ComboBox
             Grid.Row="1"
