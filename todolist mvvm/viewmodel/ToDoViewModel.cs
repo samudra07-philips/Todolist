@@ -9,7 +9,7 @@ using System.Windows.Input;
 using todolist_mvvm.Bussiness_Layer;
 using todolist_mvvm.Data;
 using todolist_mvvm.model;
-using todolist_mvvm.ServiceReference1;
+
 using todolist_mvvm.view;
 
 namespace todolist_mvvm.viewmodel
@@ -87,7 +87,7 @@ namespace todolist_mvvm.viewmodel
         {
             using (var context = new AppDbContext())
             {
-                var tasks = context.Tasks.Where(t => t.UserId == CurrentUser.Id).ToList();
+                var tasks = context.Tasks.Where(t => t.UserId == CurrentUser.Id && !t.IsCompleted).ToList();
 
                 allLowPriorityTasks = tasks.Where(t => t.Priority == TaskPriority.Low).ToList();
                 allMediumPriorityTasks = tasks
