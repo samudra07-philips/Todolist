@@ -6,23 +6,27 @@ using Unity.Wcf;
 
 namespace Todolist.Services
 {
-    public static class UnityConfig
+    public class UnityConfig
     {
-        public static void RegisterComponents(IUnityContainer container)
-        {
-           
-            container.RegisterType<IUserService, UserService>();
-            container.RegisterType<ITaskService, TaskService>();
+        private IUnityContainer _container;
 
+        public UnityConfig()
+        {
+            _container = new UnityContainer();
+            RegisterComponents(_container);
         }
 
-        public static IUnityContainer GetContainer()
+        private void RegisterComponents(IUnityContainer container)
         {
-            var container = new UnityContainer();
-            RegisterComponents(container);
-            return container;
+            container.RegisterType<IUserService, UserService>();
+            container.RegisterType<ITaskService, TaskService>();
+        }
+
+        public IUnityContainer GetContainer()
+        {
+            return _container;
         }
     }
 }
 
-}
+

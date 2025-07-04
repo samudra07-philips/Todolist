@@ -4,12 +4,16 @@ using System.ServiceModel.Activation;
 using Todolist.Services;
 using Unity.Wcf;
 
-public class UnityServiceHostFactory : ServiceHostFactory
+namespace Todolist.Services
 {
-    protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
+    public class CustomUnityServiceHostFactory : ServiceHostFactory
     {
-        var container = UnityConfig.GetContainer();
-        return new UnityServiceHost(container, serviceType, baseAddresses);
+        protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
+        {
+            var unityConfig = new UnityConfig();
+            var container = unityConfig.GetContainer();
+            return new UnityServiceHost(container, serviceType, baseAddresses);
+        }
     }
 }
 
