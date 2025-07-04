@@ -145,7 +145,7 @@ namespace todolist_mvvm.viewmodel
         {
             UpdateDisplayedTasks(SearchQuery);
 
-            // If no tasks match the query, display all tasks again
+           
             if (
                 DisplayedLowPriorityTasks.Count == 0
                 && DisplayedMediumPriorityTasks.Count == 0
