@@ -30,7 +30,7 @@ namespace todolist_mvvm
 
             base.OnStartup(e);
             // normal startup: show MainWindow etc.
-            UnityServiceHostFactory unityServiceHostFactory = new UnityServiceHostFactory
+            //UnityServiceHostFactory unityServiceHostFactory = new UnityServiceHostFactory
 ;
             var main = new Mainwindow();
             MainWindow = main;
