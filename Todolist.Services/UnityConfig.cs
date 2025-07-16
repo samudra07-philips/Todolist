@@ -1,32 +1,35 @@
-﻿using Microsoft.Practices.Unity;
+﻿       
+using Todolist.Services.Repositories; // the new repository interfaces & impls
 using todolist_mvvm.Data;
 using Unity;
 using Unity.Lifetime;
-using Unity.Wcf;
 
 namespace Todolist.Services
 {
-    public class UnityConfig
+    public static class UnityConfig
     {
-        private IUnityContainer _container;
-
-        public UnityConfig()
+        /// <summary>
+        /// Call once at host startup to register ALL dependencies.
+        /// </summary>
+        public static void RegisterComponents(IUnityContainer container)
         {
-            _container = new UnityContainer();
-            RegisterComponents(_container);
-        }
+            // 1) EF DbContext: one per WCF operation
+            container.RegisterType<AppDbContext>(
+                new HierarchicalLifetimeManager());
 
-        private void RegisterComponents(IUnityContainer container)
-        {
-            container.RegisterType<IUserService, UserService>();
-            container.RegisterType<ITaskService, TaskService>();
-        }
+            // 2) Repositories: one per operation, auto-disposed
+            container.RegisterType<IUserRepository, UserRepository>(
+                new HierarchicalLifetimeManager());
+            container.RegisterType<ITaskRepository, TaskRepository>(
+                new HierarchicalLifetimeManager());
 
-        public IUnityContainer GetContainer()
-        {
-            return _container;
+            // 3) WCF services themselves: one instance per call
+            container.RegisterType<IUserService, UserService>(
+                new HierarchicalLifetimeManager());
+            container.RegisterType<ITaskService, TaskService>(
+                new HierarchicalLifetimeManager());
+
+            // …register any other services, validators, loggers here…
         }
     }
 }
-
-

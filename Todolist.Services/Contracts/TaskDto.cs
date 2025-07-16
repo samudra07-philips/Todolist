@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using todolist_mvvm.Data;
 using todolist_mvvm.model;
-namespace Todolist.Services
+namespace Todolist.Services.Contracts
 {
     public class TaskDto
     {
