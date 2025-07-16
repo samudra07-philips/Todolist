@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Todolist.Services.
+using Todolist.Services.Contracts;
 
 namespace Todolist.Services.Repositories
 {

@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using todolist_mvvm.Bussiness_Layer.Helpers;
-using todolist_mvvm.Data;
-using todolist_mvvm.model;
+﻿using System.ServiceModel;
+using Todolist.Services.Repositories;
+
 namespace Todolist.Services
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
     public class UserService : IUserService
     {
+        private readonly IUserRepository _repo;
+
+        public UserService(IUserRepository repo)
+        {
+            _repo = repo;
+        }
+
         public bool Login(string username, string password)
         {
-            using (var db = new AppDbContext())
-            {
-                var user = db.Users.SingleOrDefault(u => u.Username == username);
-                return user != null && PasswordHasher.VerifyPassword(password, user.PasswordHash);
-            }
+            return _repo.ValidateUser(username, password);
         }
 
         public void Signup(string username, string password)
         {
-            using (var db = new AppDbContext())
-            {
-                var hash = PasswordHasher.HashPassword(password);
-                db.Users.Add(new User { Username = username, PasswordHash = hash });
-                db.SaveChanges();
-            }
+            _repo.CreateUser(username, password);
         }
     }
 }

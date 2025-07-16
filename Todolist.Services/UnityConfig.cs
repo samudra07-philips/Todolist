@@ -1,9 +1,8 @@
-﻿       
+﻿using todolist_mvvm.Data;       // your EF DbContext namespace
 using Todolist.Services.Repositories; // the new repository interfaces & impls
-using todolist_mvvm.Data;
 using Unity;
 using Unity.Lifetime;
-
+using Todolist.Services.Contracts;
 namespace Todolist.Services
 {
     public static class UnityConfig
@@ -18,7 +17,7 @@ namespace Todolist.Services
                 new HierarchicalLifetimeManager());
 
             // 2) Repositories: one per operation, auto-disposed
-            container.RegisterType<IUserRepository, UserRepository>(
+            container.RegisterType<IUserRepository,UserRepository1>(
                 new HierarchicalLifetimeManager());
             container.RegisterType<ITaskRepository, TaskRepository>(
                 new HierarchicalLifetimeManager());

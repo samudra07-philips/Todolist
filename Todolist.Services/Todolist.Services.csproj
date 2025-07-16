@@ -91,6 +91,8 @@
     <Compile Include="Contracts\TaskDto.cs" />
     <Compile Include="Repositories\ITaskRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\TaskRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="TaskService.cs" />
     <Compile Include="UnityConfig.cs" />
     <Compile Include="UserService.cs" />
