@@ -5,30 +5,7 @@ VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todolist mvvm", "todolist mvvm\todolist mvvm.csproj", "{54496EFC-593F-4E0D-8D5F-1D353272389B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todolist.Services", "Todolist.Services\Todolist.Services.csproj", "{CBEDBB14-87F0-401E-A71F-91DE4D04EF42}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WCFServiceHost", "WCFServiceHost\", "{E993A63E-47AF-C5AE-1704-3B01537813CF}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
-		ProjectReferences = "{cbedbb14-87f0-401e-a71f-91de4d04ef42}|Todolist.Services.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_65118"
-		Debug.AspNetCompiler.PhysicalPath = "WCFServiceHost\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65118\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_65118"
-		Release.AspNetCompiler.PhysicalPath = "WCFServiceHost\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_65118\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "65118"
-		SlnRelativePath = "WCFServiceHost\"
-		DefaultWebSiteLanguage = "Visual C#"
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todolist.Service", "todolist.Service\todolist.Service.csproj", "{F6AAF2F4-0B09-4BCA-B6EC-C07AE904EAF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,14 +17,10 @@ Global
 		{54496EFC-593F-4E0D-8D5F-1D353272389B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54496EFC-593F-4E0D-8D5F-1D353272389B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54496EFC-593F-4E0D-8D5F-1D353272389B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBEDBB14-87F0-401E-A71F-91DE4D04EF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBEDBB14-87F0-401E-A71F-91DE4D04EF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBEDBB14-87F0-401E-A71F-91DE4D04EF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBEDBB14-87F0-401E-A71F-91DE4D04EF42}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E993A63E-47AF-C5AE-1704-3B01537813CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E993A63E-47AF-C5AE-1704-3B01537813CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E993A63E-47AF-C5AE-1704-3B01537813CF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{E993A63E-47AF-C5AE-1704-3B01537813CF}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{F6AAF2F4-0B09-4BCA-B6EC-C07AE904EAF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6AAF2F4-0B09-4BCA-B6EC-C07AE904EAF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6AAF2F4-0B09-4BCA-B6EC-C07AE904EAF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6AAF2F4-0B09-4BCA-B6EC-C07AE904EAF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
