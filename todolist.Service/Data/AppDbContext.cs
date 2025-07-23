@@ -18,7 +18,7 @@ namespace Todolist.Services.Data
             modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
 
 
-            modelBuilder.Entity<Tasks>().Property(t => t.Name).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Tasks>().Property(t => t.Title).IsRequired().HasMaxLength(100);
 
             modelBuilder.Entity<Tasks>().Property(t => t.Priority).IsRequired();
 
