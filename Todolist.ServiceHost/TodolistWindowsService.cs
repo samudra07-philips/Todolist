@@ -69,20 +69,27 @@ namespace Todolist.ServiceHost
             try
             {
                 OnStart(null);
-                Console.WriteLine("Service running. Press Enter to stop.");
-                Console.ReadLine();
+                Console.WriteLine("Service running. Press Ctrl + C or Enter to stop.");
+
+                // This will keep the service alive indefinitely unless Enter is pressed
+                while (true)
+                {
+                    var input = Console.ReadLine();
+                    if (input != null)
+                        break;
+                }
+
                 OnStop();
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("❌ Exception occurred:");
-                Console.ResetColor();
-                Console.WriteLine(ex.ToString());
-                Console.WriteLine("Press Enter to exit...");
-                Console.ReadLine();
+                Console.WriteLine("Service crashed with error:");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                Console.ReadLine(); // Pause so you can read the error
             }
         }
+
 
     }
 }
