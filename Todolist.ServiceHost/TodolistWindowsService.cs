@@ -17,18 +17,18 @@ namespace Todolist.ServiceHost
 
         protected override void OnStart(string[] args)
         {
-            // 1) Apply EF Migrations
+            
             Database.SetInitializer(
                 new MigrateDatabaseToLatestVersion<AppDbContext, Todolist.Service.Migrations.Configuration>());
 
             using (var ctx = new AppDbContext())
                 ctx.Database.Initialize(force: true);
 
-            // 2) Setup Unity
+           
             var container = new UnityContainer();
             UnityConfig.RegisterComponents(container);
 
-            // 3) Host both services
+          
             StartServiceHost<UserService, IUserService>(container, "http://localhost:8000/UserService");
             StartServiceHost<TaskService, ITaskService>(container, "http://localhost:8001/TaskService");
         }
@@ -53,7 +53,6 @@ namespace Todolist.ServiceHost
         }
 
 
-      
 
         protected override void OnStop()
         {
@@ -65,13 +64,25 @@ namespace Todolist.ServiceHost
             _hosts.Clear();
         }
 
-        // Debugging via Console
         public void RunAsConsole()
         {
-            OnStart(null);
-            Console.WriteLine("Service is running... Press Enter to stop.");
-            Console.ReadLine();
-            OnStop();
+            try
+            {
+                OnStart(null);
+                Console.WriteLine("Service running. Press Enter to stop.");
+                Console.ReadLine();
+                OnStop();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("❌ Exception occurred:");
+                Console.ResetColor();
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("Press Enter to exit...");
+                Console.ReadLine();
+            }
         }
+
     }
 }
