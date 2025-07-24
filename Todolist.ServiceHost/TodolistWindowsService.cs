@@ -18,48 +18,42 @@ namespace Todolist.ServiceHost
         protected override void OnStart(string[] args)
         {
             // 1) Apply EF Migrations
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, Todolist.Service.Migrations.Configuration>());
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<AppDbContext, Todolist.Service.Migrations.Configuration>());
+
             using (var ctx = new AppDbContext())
                 ctx.Database.Initialize(force: true);
 
-            // 2) Build Unity container
+            // 2) Setup Unity
             var container = new UnityContainer();
             UnityConfig.RegisterComponents(container);
 
-            // Start both service hosts
-            StartServiceHost<UserService, IUserService>("UserService", 8000, container);
-            StartServiceHost<TaskService, ITaskService>("TaskService", 8001, container);
+            // 3) Host both services
+            StartServiceHost<UserService, IUserService>(container, "http://localhost:8000/UserService");
+            StartServiceHost<TaskService, ITaskService>(container, "http://localhost:8001/TaskService");
         }
 
-        private void StartServiceHost<TService, TContract>(string path, int port, IUnityContainer container)
-            where TService : class
+        private void StartServiceHost<TService, TContract>(IUnityContainer container, string baseAddress)
         {
-            var baseAddress = new Uri($"http://localhost:{port}/{path}");
-            var host = new UnityServiceHost(container, typeof(TService), baseAddress);
+            var uri = new Uri(baseAddress);
+            var host = new UnityServiceHost(container, typeof(TService), uri);
 
-            // Ensure metadata behavior is present
-            var smb = host.Description.Behaviors.Find<ServiceMetadataBehavior>();
-            if (smb == null)
+            var smb = new ServiceMetadataBehavior
             {
-                smb = new ServiceMetadataBehavior
-                {
-                    HttpGetEnabled = true,
-                    HttpGetUrl = baseAddress
-                };
-                host.Description.Behaviors.Add(smb);
-            }
+                HttpGetEnabled = true,
+                HttpGetUrl = uri
+            };
+            host.Description.Behaviors.Add(smb);
 
-            // Add main service endpoint
             host.AddServiceEndpoint(typeof(TContract), new BasicHttpBinding(), "");
-
-            // Add MEX endpoint
-            host.AddServiceEndpoint(ServiceMetadataBehavior.MexContractName,
-                                    MetadataExchangeBindings.CreateMexHttpBinding(),
-                                    "mex");
+            host.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexHttpBinding(), "mex");
 
             host.Open();
             _hosts.Add(host);
         }
+
+
+      
 
         protected override void OnStop()
         {
