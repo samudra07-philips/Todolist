@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Todolist.Services")]
+[assembly: AssemblyTitle("todolist.Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Philips")]
-[assembly: AssemblyProduct("Todolist.Services")]
+[assembly: AssemblyProduct("todolist.Service")]
 [assembly: AssemblyCopyright("Copyright © Philips 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("cbedbb14-87f0-401e-a71f-91de4d04ef42")]
+[assembly: Guid("f6aaf2f4-0b09-4bca-b6ec-c07ae904eaf2")]
 
 // Version information for an assembly consists of the following four values:
 //
