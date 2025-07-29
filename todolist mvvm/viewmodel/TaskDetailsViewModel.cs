@@ -61,7 +61,7 @@ namespace todolist_mvvm.viewmodel
 
         }
 
-        public TaskDetailsViewModel(Tasks selectedTask, TaskDetails detailsWindow)
+        public TaskDetailsViewModel(TaskDto dto, Tasks selectedTask, TaskDetails detailsWindow)
         {
             this.selectedTask = selectedTask;
             this.detailsWindow = detailsWindow;

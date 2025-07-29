@@ -165,12 +165,28 @@ namespace todolist_mvvm.viewmodel
         {
             if (SelectedTask == null) return;
 
-            var detailsWindow = new TaskDetails(SelectedTask);
-            detailsWindow.DataContext =
-                new TaskDetailsViewModel(SelectedTask, detailsWindow);
+            var taskService = _taskServiceFactory();
+
+            // Convert SelectedTask to TaskDto for TaskDetails
+            var dto = new TaskDto
+            {
+                Id = SelectedTask.Id,
+                Title = SelectedTask.Name, // Use Name if that's the property holding the title
+                Description = SelectedTask.Description,
+                IsCompleted = SelectedTask.IsCompleted,
+                Priority = (Todolist.Services.Data.TaskPriority)(int)SelectedTask.Priority, // Explicit conversion added
+                UserId = SelectedTask.UserId,
+                CompletedAt = SelectedTask.CompletedAt
+            };
+
+            var detailsWindow = new TaskDetails(dto, taskService);
+
+            // Pass a TaskDetailsViewModel that uses the TaskDto, not Tasks
+            detailsWindow.DataContext = new TaskDetailsViewModel(taskService, dto, detailsWindow);
+
             detailsWindow.Owner = Application.Current.Windows
-                                     .OfType<Window>()
-                                     .FirstOrDefault(w => w.IsActive);
+                                 .OfType<Window>()
+                                 .FirstOrDefault(w => w.IsActive);
             detailsWindow.ShowDialog();
             RefreshContent();
         }

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using todolist_mvvm.model;
 using todolist_mvvm.viewmodel;
+using Todolist.Services;
+using Todolist.Services.Contracts;
 
 namespace todolist_mvvm.view
 {
@@ -21,12 +23,10 @@ namespace todolist_mvvm.view
     /// </summary>
     public partial class TaskDetails : Window
     {
-        
-
-        public TaskDetails(Tasks task)
+        public TaskDetails(TaskDto taskDto, ITaskService taskService)
         {
             InitializeComponent();
-            DataContext=new TaskDetailsViewModel(task,this);
+            DataContext = new TaskDetailsViewModel(taskService, taskDto, this);
         }
     }
 }
