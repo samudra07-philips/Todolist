@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using todolist_mvvm;
+using Unity;
+using Todolist.Mvvm;               // for WpfUnityConfig
+using todolist_mvvm.viewmodel;
+using Todolist.Services;     // for MainWindowViewModel
+
 namespace todolist_mvvm
 {
-   
     public partial class App : Application
     {
         private Mutex _mutex;
-        private const string MutexName = "Samudratodolist_Mutex"; 
-
+        private const string MutexName = "Samudratodolist_Mutex";
+        public static IUnityContainer container { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
+            // 1) Enforce single instance
             bool createdNew;
             _mutex = new Mutex(true, MutexName, out createdNew);
             if (!createdNew)
@@ -27,40 +27,54 @@ namespace todolist_mvvm
                 Shutdown();
                 return;
             }
+            AppDomain.CurrentDomain.UnhandledException += (s, args) =>
+            {
+                Exception ex = (Exception)args.ExceptionObject;
+                MessageBox.Show("Unhandled exception: " + ex.Message);
+            };
 
+            DispatcherUnhandledException += (s, args) =>
+            {
+                MessageBox.Show("Dispatcher exception: " + args.Exception.Message);
+                args.Handled = true;
+            };
             base.OnStartup(e);
-            // normal startup: show MainWindow etc.
-            //UnityServiceHostFactory unityServiceHostFactory = new UnityServiceHostFactory
-;
-            var main = new Mainwindow();
-            MainWindow = main;
-            main.Show();
+
+            // 2) Build your Unity container via WpfUnityConfig
+            container = WpfUnityConfig.RegisterComponents();
+
+            // 3) Resolve your MainWindowViewModel (root VM)
+            var mainVm = container.Resolve<MainWindowViewModel>();
+
+            // Resolve the IUserService dependency from the Unity container
+            var userService = container.Resolve<IUserService>();
+
+            // Pass the resolved userService to the Mainwindow constructor
+            var mainWindow = new Mainwindow(userService)
+            {
+                DataContext = mainVm
+            };
+            MainWindow = mainWindow;
+            mainWindow.Show();
         }
 
         private void ActivateExistingWindow()
         {
             try
             {
-                var currentProc = Process.GetCurrentProcess();
-                // Find other process with same name
-                var other = Process.GetProcessesByName(currentProc.ProcessName)
-                                   .FirstOrDefault(p => p.Id != currentProc.Id);
-                if (other != null)
-                {
-                    var handle = other.MainWindowHandle;
-                    if (handle != IntPtr.Zero)
-                    {
-                        // If minimized, restore
-                        if (IsIconic(handle))
-                            ShowWindow(handle, SW_RESTORE);
-                        // Bring to front
-                        SetForegroundWindow(handle);
-                    }
-                }
+                var current = Process.GetCurrentProcess();
+                var other = Process
+                    .GetProcessesByName(current.ProcessName)
+                    .FirstOrDefault(p => p.Id != current.Id);
+
+                if (other == null) return;
+                var h = other.MainWindowHandle;
+                if (IsIconic(h)) ShowWindow(h, SW_RESTORE);
+                SetForegroundWindow(h);
             }
             catch
             {
-                // ignore
+                // ignore any errors in activation
             }
         }
 
@@ -71,16 +85,19 @@ namespace todolist_mvvm
             base.OnExit(e);
         }
 
-        // P/Invoke for window activation:
+        #region Win32 P/Invoke for single-instance activation
+
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         private static extern bool IsIconic(IntPtr hWnd);
 
-        private const int SW_RESTORE = 9;
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-    }
 
+        private const int SW_RESTORE = 9;
+
+        #endregion
+    }
 }

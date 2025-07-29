@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using todolist_mvvm.view;
 using todolist_mvvm.viewmodel;
 
+
+using Todolist.Services;
 namespace todolist_mvvm
 {
     /// <summary>
@@ -21,12 +23,14 @@ namespace todolist_mvvm
     /// </summary>
     public partial class Mainwindow : Window
     {
-        public Mainwindow()
+        private readonly IUserService _userService;
+
+        public Mainwindow(IUserService userService)
         {
+            _userService = userService; // Store the injected service
             InitializeComponent();
             DataContext = new MainWindowViewModel(MainFrame);
-            MainFrame.Navigate(new LoginPage());
+            MainFrame.Navigate(new LoginPage(_userService)); // Pass the service to Signup
         }
     }
-
 }

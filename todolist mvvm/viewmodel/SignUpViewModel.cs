@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+using System.ServiceModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using todolist_mvvm.Data;
-using todolist_mvvm.model;
+using Todolist.Services;
 using todolist_mvvm.view;
 
 namespace todolist_mvvm.viewmodel
@@ -16,7 +13,7 @@ namespace todolist_mvvm.viewmodel
         private string _username;
         private string _password;
         private string _confirmpassword;
-
+        private readonly IUserService _userService;
         public string Username
         {
             get => _username;
@@ -63,9 +60,10 @@ namespace todolist_mvvm.viewmodel
 
         public RelayCommand SignupCommand { get; }
 
-        public SignUpViewModel()
+        public SignUpViewModel(IUserService userService)
         {
             SignupCommand = new RelayCommand(Execute);
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         private void Execute(object parameter)
@@ -103,56 +101,42 @@ namespace todolist_mvvm.viewmodel
                 MessageBox.Show("Passwords do not match!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            string passwordHash = HashPassword(Password);
-
-            using (var context = new AppDbContext())
+            try
             {
-                using (var transaction = context.Database.BeginTransaction())
+                // Call through WCF to create the user (repository will hash & save)
+                _userService.Signup(Username, Password);
+                ((IClientChannel)_userService).Close();
+
+                MessageBox.Show(
+                    "Your account has been successfully created!\nPlease log in to your account!",
+                    "Account Created",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                if (parameter is Page page)
                 {
-                    try
-                    {
-                        if (context.Users.Any(u => u.Username == Username))
-                        {
-                            MessageBox.Show("This username is already taken.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
+                    Username = string.Empty;
+                    Password = string.Empty;
+                    Confirmpassword = string.Empty;
 
-                        var user = new User { Username = Username, PasswordHash = passwordHash };
-                        context.Users.Add(user);
-                        context.SaveChanges();
-
-                        transaction.Commit();
-
-                        MessageBox.Show("Your account has been successfully created!\nPlease log in to your account!", "Account Created", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        if (parameter is Page page)
-                        {
-                            Username = string.Empty;
-                            Password = string.Empty;
-                            Confirmpassword = string.Empty;
-
-                            page.NavigationService.Navigate(new LoginPage());
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                
+                    page.NavigationService.Navigate(new LoginPage(_userService));
                 }
             }
-        }
-
-
-        private string HashPassword(string password)
-        {
-            using (var sha256 = SHA256.Create())
+           
+            catch (Exception ex)
             {
-                var bytes = Encoding.UTF8.GetBytes(password);
-                var hash = sha256.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
+                ((IClientChannel)_userService).Abort();
+                MessageBox.Show(
+                    $"An unexpected error occurred: {ex.Message}",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
+
         }
+
+
+        
     }
 }

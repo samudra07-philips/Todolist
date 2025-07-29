@@ -10,9 +10,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Page.DataContext>
-        <vm:SignUpViewModel />
-    </Page.DataContext>
+
     <Page.InputBindings>
         <KeyBinding
             Key="Enter"
