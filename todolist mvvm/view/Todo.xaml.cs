@@ -1,5 +1,4 @@
-﻿
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 using System.Windows.Input;
 
@@ -24,12 +23,9 @@ namespace todolist_mvvm.view
             // 2) Resolve the service
             var taskService = container.Resolve<ITaskService>();
 
-            // 3) Now resolve the VM, passing in the service and this Window
-            var vm = new ToDoViewModel(taskService);
-            // Alternatively, if you want Unity to construct the VM:
-            // var vm = container.Resolve<AddTaskWindowViewModel>(
-            //     new ParameterOverride("window", this)
-            // );
+            // 3) Now resolve the VM, passing in the service as a factory function
+            var vm = new ToDoViewModel(() => taskService);
+           
 
             DataContext = vm;
         }

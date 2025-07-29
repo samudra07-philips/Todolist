@@ -15,8 +15,9 @@ namespace todolist_mvvm.viewmodel
 {
     public class ToDoViewModel : BaseViewModel, IRefreshablePage
     {
-        private readonly ITaskService _taskService;
+        private readonly Func<ITaskService> _taskServiceFactory;
         private readonly IUserService _userService;
+
         public ObservableCollection<Tasks> DisplayedLowPriorityTasks { get; }
             = new ObservableCollection<Tasks>();
         public ObservableCollection<Tasks> DisplayedMediumPriorityTasks { get; }
@@ -61,8 +62,9 @@ namespace todolist_mvvm.viewmodel
             }
         }
 
-        public ToDoViewModel(ITaskService taskService)
+        public ToDoViewModel(Func<ITaskService> taskServiceFactory)
         {
+            _taskServiceFactory = taskServiceFactory ?? throw new ArgumentNullException(nameof(taskServiceFactory));
 
             OpenTaskDetailsCommand = new RelayCommand(
                 _ => OpenTaskDetails(),
@@ -72,7 +74,6 @@ namespace todolist_mvvm.viewmodel
             SearchCommand = new RelayCommand(_ => ExecuteSearch());
             OpenHistoryPage = new RelayCommand(_ => OpenHistory());
             LogoutCommand = new RelayCommand(_ => ExecuteLogout());
-            _taskService = taskService ?? throw new ArgumentNullException(nameof(taskService));
 
             // Initial load
             LoadTasks();
@@ -88,14 +89,13 @@ namespace todolist_mvvm.viewmodel
         {
             try
             {
-                var dtos = _taskService.GetPendingTasks(CurrentUser.Id).ToList();
-                ((IClientChannel)_taskService).Close();
-
+                // Directly use the task service without a using statement
+                var taskService = _taskServiceFactory();
+                var dtos = taskService.GetPendingTasks(CurrentUser.Id).ToList();
                 _allTasks = dtos;
             }
             catch (Exception ex)
             {
-                ((IClientChannel)_taskService).Abort();
                 MessageBox.Show($"Error loading tasks: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 _allTasks = new List<TaskDto>();
             }
