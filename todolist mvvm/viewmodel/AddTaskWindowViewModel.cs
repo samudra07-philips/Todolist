@@ -1,51 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
-using todolist_mvvm.Data;
-using todolist_mvvm.model;
+using Todolist.Services.Contracts;
+using Todolist.Services;// ITaskService, TaskDto
 using todolist_mvvm.Bussiness_Layer;
+using todolist_mvvm.model;
 
 namespace todolist_mvvm.viewmodel
 {
     public class AddTaskWindowViewModel : BaseViewModel
     {
-        private string title;
-        private string description;
-        private string selectedPriority;
-        private readonly Window window;
+        private readonly ITaskService _taskService;
+        private readonly Window _window;
+
+        private string _title;
+        private string _description;
+        private string _selectedPriority;
 
         public RelayCommand AddNewTask { get; }
+
         public List<string> Priorities { get; } =
             new List<string> { "Low", "Medium", "High", "Critical" };
 
         public string Title
         {
-            get => title;
+            get => _title;
             set
             {
-                if (title != value)
+                if (_title != value)
                 {
-                    title = value;
+                    _title = value;
                     OnPropertyChanged(nameof(Title));
-                    AddNewTask.RaiseCanExecuteChanged();
-                }
-            }
-        }
-
-        public string Description
-        {
-            get => description;
-            set
-            {
-                if (description != value)
-                {
-                    description = value;
-                    OnPropertyChanged(nameof(Description));
                     AddNewTask.RaiseCanExecuteChanged();
                 }
             }
@@ -55,82 +42,92 @@ namespace todolist_mvvm.viewmodel
             
         }
 
-        public string SelectedPriority
+        public string Description
         {
-            get => selectedPriority;
+            get => _description;
             set
             {
-                if (selectedPriority != value)
+                if (_description != value)
                 {
-                    selectedPriority = value;
+                    _description = value;
+                    OnPropertyChanged(nameof(Description));
+                    AddNewTask.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public string SelectedPriority
+        {
+            get => _selectedPriority;
+            set
+            {
+                if (_selectedPriority != value)
+                {
+                    _selectedPriority = value;
                     OnPropertyChanged(nameof(SelectedPriority));
                     AddNewTask.RaiseCanExecuteChanged();
                 }
             }
         }
 
-
-        public AddTaskWindowViewModel(Window window)
+        public AddTaskWindowViewModel(ITaskService taskService, Window window)
         {
-            this.window = window;
-            AddNewTask = new RelayCommand(Execute, CanExecute);
+            _window = window ?? throw new ArgumentNullException(nameof(window));
+
+            AddNewTask = new RelayCommand(ExecuteAdd, CanExecuteAdd);
+            _taskService = taskService ?? throw new ArgumentNullException(nameof(taskService));
         }
 
-        private bool CanExecute(object parameter)
+        private bool CanExecuteAdd(object parameter)
         {
-            return !string.IsNullOrEmpty(Title)
-                && !string.IsNullOrEmpty(SelectedPriority);
+            return !string.IsNullOrWhiteSpace(Title)
+                && !string.IsNullOrWhiteSpace(SelectedPriority);
         }
 
-        private void Execute(object parameter)
+        private void ExecuteAdd(object parameter)
         {
-            if (string.IsNullOrWhiteSpace(Title) || string.IsNullOrWhiteSpace(SelectedPriority))
+            if (!Enum.TryParse<TaskPriority>(SelectedPriority, out var priority))
             {
                 MessageBox.Show(
-                    "All fields are required. Please fill in all details.",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                    "Invalid priority selected. Please select a valid priority.",
+                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            using (var context = new AppDbContext())
+           
+            var dto = new TaskDto
             {
-                if (Enum.TryParse<TaskPriority>(SelectedPriority, out var parsedPriority))
-                {
-                    var task = new Tasks
-                    {
-                        Name = Title,
-                        Description = Description,
-                        Priority = parsedPriority,
-                        UserId = CurrentUser.Id
-                    };
+                UserId = CurrentUser.Id,
+                Title = Title,
+                Description = Description,
+                Priority = (Todolist.Services.Data.TaskPriority)priority
+            };
 
-                    context.Tasks.Add(task);
-                    context.SaveChanges();
-
-                   
-
-                    if (window is IRefreshablePage refreshable)
-                    {
-                        refreshable.RefreshContent();
-                    }
-
-                    window?.Close();
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Invalid priority selected. Please select a valid priority.",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                }
+            try
+            {
+                // Send to service
+                _taskService.AddTask(dto);
+                ((IClientChannel)_taskService).Close();
             }
+            catch (Exception ex)
+            {
+                ((IClientChannel)_taskService).Abort();
+                MessageBox.Show($"Error creating task: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Tell the owning page to refresh
+            if (_window.Owner is IRefreshablePage refreshable)
+            {
+                refreshable.RefreshContent();
+            }
+            else if (_window.Content is Frame frame && frame.Content is IRefreshablePage page)
+            {
+                page.RefreshContent();
+            }
+
+            // Close the dialog
+            _window.Close();
         }
-
-
     }
 }

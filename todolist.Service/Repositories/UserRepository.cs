@@ -21,5 +21,9 @@ namespace Todolist.Services.Repositories
             _ctx.Users.Add(new User { Username = username, PasswordHash = hash });
             _ctx.SaveChanges();
         }
+        public User GetByUsername(string username)
+        {
+            return _ctx.Users.SingleOrDefault(u => u.Username == username);
+        }
     }
 }

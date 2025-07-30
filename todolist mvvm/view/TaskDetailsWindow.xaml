@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:todolist_mvvm.view"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel"
+    xmlns:vm="clr-namespace:todolist_mvvm.viewmodel" d:DataContext="{d:DesignInstance Type=vm:TaskDetailsViewModel}"
     Title="TaskDetails"
     Width="600"
     Height="400"
@@ -30,7 +30,7 @@
             Grid.Row="1"
             IsReadOnly="{Binding IsReadOnly}"
             Style="{StaticResource CustomTextBox}"
-            Text="{Binding Task.Name, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding TaskDto.Title, UpdateSourceTrigger=PropertyChanged}" />
 
 
         <TextBox
@@ -39,7 +39,7 @@
             AcceptsReturn="True"
             IsReadOnly="{Binding IsReadOnly}"
             Style="{StaticResource CustomTextBox}"
-            Text="{Binding Task.Description, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding TaskDto.Description, UpdateSourceTrigger=PropertyChanged}"
             VerticalScrollBarVisibility="Auto" />
 
         <DockPanel

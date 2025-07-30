@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Todolist.Services;
 using todolist_mvvm.viewmodel;
 
 namespace todolist_mvvm.view
@@ -21,9 +22,10 @@ namespace todolist_mvvm.view
     /// </summary>
     public partial class Signup : Page, IRefreshablePage
     {
-        public Signup()
+        public Signup(IUserService userService)
         {
             InitializeComponent();
+            DataContext = new SignUpViewModel(userService);
         }
 
         public void RefreshContent()
@@ -75,3 +77,5 @@ namespace todolist_mvvm.view
         
     }
 }
+
+

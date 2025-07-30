@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using todolist_mvvm.viewmodel;
+using Todolist.Services;
 using todolist_mvvm.Bussiness_Layer;
+using todolist_mvvm.viewmodel;
 namespace todolist_mvvm.view
 {
     ///<summary>
@@ -31,9 +32,10 @@ namespace todolist_mvvm.view
             textboxsample.Text = string.Empty;
             passboxsample.Password = string.Empty;
         }
-        public LoginPage()
+        public LoginPage(IUserService userService)
         {
             InitializeComponent();
+            DataContext = new LoginPageViewModel(userService);
             CurrentUser.Clear();
             
         }

@@ -2,101 +2,102 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
+using System.ServiceModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using todolist_mvvm.Bussiness_Layer;
-using todolist_mvvm.Data;
-using todolist_mvvm.model;
 
-using todolist_mvvm.view; 
+using Todolist.Services;
+using Todolist.Services.Contracts;
+using todolist_mvvm.Bussiness_Layer;
+using todolist_mvvm.model;
+using todolist_mvvm.view;
 
 namespace todolist_mvvm.viewmodel
 {
     public class ToDoViewModel : BaseViewModel, IRefreshablePage
     {
-        // Task collections
-        public ObservableCollection<Tasks> DisplayedLowPriorityTasks { get; private set; } =
-            new ObservableCollection<Tasks>();
-        public ObservableCollection<Tasks> DisplayedMediumPriorityTasks { get; private set; } =
-            new ObservableCollection<Tasks>();
-        public ObservableCollection<Tasks> DisplayedHighPriorityTasks { get; private set; } =
-            new ObservableCollection<Tasks>();
-        public ObservableCollection<Tasks> DisplayedCriticalPriorityTasks { get; private set; } =
-            new ObservableCollection<Tasks>();
+        private readonly Func<ITaskService> _taskServiceFactory;
+        private readonly IUserService _userService;
 
-        private List<Tasks> allLowPriorityTasks = new List<Tasks>();
-        private List<Tasks> allMediumPriorityTasks = new List<Tasks>();
-        private List<Tasks> allHighPriorityTasks = new List<Tasks>();
-        private List<Tasks> allCriticalPriorityTasks = new List<Tasks>();
+        public ObservableCollection<Tasks> DisplayedLowPriorityTasks { get; }
+            = new ObservableCollection<Tasks>();
+        public ObservableCollection<Tasks> DisplayedMediumPriorityTasks { get; }
+            = new ObservableCollection<Tasks>();
+        public ObservableCollection<Tasks> DisplayedHighPriorityTasks { get; }
+            = new ObservableCollection<Tasks>();
+        public ObservableCollection<Tasks> DisplayedCriticalPriorityTasks { get; }
+            = new ObservableCollection<Tasks>();
 
-        private Tasks selectedTask;
+        private List<TaskDto> _allTasks = new List<TaskDto>();
+
+        private Tasks _selectedTask;
         public Tasks SelectedTask
         {
-            get => selectedTask;
+            get => _selectedTask;
             set
             {
-                if (selectedTask != value)
+                if (_selectedTask != value)
                 {
-                    selectedTask = value;
+                    _selectedTask = value;
                     OnPropertyChanged(nameof(SelectedTask));
                     OpenTaskDetailsCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        // Commands
         public RelayCommand OpenTaskDetailsCommand { get; }
         public RelayCommand AddCommand { get; }
         public RelayCommand OpenHistoryPage { get; }
         public RelayCommand LogoutCommand { get; }
         public RelayCommand SearchCommand { get; }
 
-        // Constructor
-        public ToDoViewModel()
+        private string _searchQuery;
+        public string SearchQuery
         {
-            LoadTasks();
-            OpenTaskDetailsCommand = new RelayCommand(
-                param => OpenTaskDetails(param as Tasks),
-                param => SelectedTask != null
-            );
+            get => _searchQuery;
+            set
+            {
+                _searchQuery = value;
+                OnPropertyChanged(nameof(SearchQuery));
+                ExecuteSearch();
+            }
+        }
 
-            AddCommand = new RelayCommand(ExecuteAdd, _ => true);
+        public ToDoViewModel(Func<ITaskService> taskServiceFactory)
+        {
+            _taskServiceFactory = taskServiceFactory ?? throw new ArgumentNullException(nameof(taskServiceFactory));
+
+            OpenTaskDetailsCommand = new RelayCommand(
+                _ => OpenTaskDetails(),
+                _ => SelectedTask != null);
+
+            AddCommand = new RelayCommand(_ => ExecuteAdd());
             SearchCommand = new RelayCommand(_ => ExecuteSearch());
-            OpenHistoryPage = new RelayCommand(OpenHistory);
-            LogoutCommand = new RelayCommand(ExecuteLogout);
+            OpenHistoryPage = new RelayCommand(_ => OpenHistory());
+            LogoutCommand = new RelayCommand(_ => ExecuteLogout());
+
+            // Initial load
+            LoadTasks();
         }
 
         public void RefreshContent()
         {
-            ClearDisplayedTasks();
             SearchQuery = string.Empty;
             LoadTasks();
         }
 
-        private void ClearDisplayedTasks()
-        {
-            DisplayedLowPriorityTasks.Clear();
-            DisplayedMediumPriorityTasks.Clear();
-            DisplayedHighPriorityTasks.Clear();
-            DisplayedCriticalPriorityTasks.Clear();
-        }
-
         private void LoadTasks()
         {
-            using (var context = new AppDbContext())
+            try
             {
-                var tasks = context.Tasks.Where(t => t.UserId == CurrentUser.Id && !t.IsCompleted).ToList();
-
-                allLowPriorityTasks = tasks.Where(t => t.Priority == TaskPriority.Low).ToList();
-                allMediumPriorityTasks = tasks
-                    .Where(t => t.Priority == TaskPriority.Medium)
-                    .ToList();
-                allHighPriorityTasks = tasks.Where(t => t.Priority == TaskPriority.High).ToList();
-                allCriticalPriorityTasks = tasks
-                    .Where(t => t.Priority == TaskPriority.Critical)
-                    .ToList();
+                // Directly use the task service without a using statement
+                var taskService = _taskServiceFactory();
+                var dtos = taskService.GetPendingTasks(CurrentUser.Id).ToList();
+                _allTasks = dtos;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading tasks: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _allTasks = new List<TaskDto>();
             }
 
             UpdateDisplayedTasks();
@@ -104,123 +105,107 @@ namespace todolist_mvvm.viewmodel
 
         private void UpdateDisplayedTasks(string query = null)
         {
-            UpdateTaskCollection(DisplayedLowPriorityTasks, allLowPriorityTasks, query);
-            UpdateTaskCollection(DisplayedMediumPriorityTasks, allMediumPriorityTasks, query);
-            UpdateTaskCollection(DisplayedHighPriorityTasks, allHighPriorityTasks, query);
-            UpdateTaskCollection(DisplayedCriticalPriorityTasks, allCriticalPriorityTasks, query);
-        }
+            DisplayedLowPriorityTasks.Clear();
+            DisplayedMediumPriorityTasks.Clear();
+            DisplayedHighPriorityTasks.Clear();
+            DisplayedCriticalPriorityTasks.Clear();
 
-        private void UpdateTaskCollection(
-            ObservableCollection<Tasks> displayedCollection,
-            List<Tasks> allTasks,
-            string query
-        )
-        {
-            displayedCollection.Clear();
-            var filteredTasks = string.IsNullOrWhiteSpace(query)
-                ? allTasks
-                : allTasks.Where(t =>
-                    t.Name.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0
-                );
+            IEnumerable<TaskDto> filtered = string.IsNullOrWhiteSpace(query)
+                ? _allTasks
+                : _allTasks.Where(t => t.Title.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0);
 
-            foreach (var task in filteredTasks)
+            foreach (var dto in filtered)
             {
-                displayedCollection.Add(task);
-            }
-        }
-
-        private string searchQuery;
-        public string SearchQuery
-        {
-            get => searchQuery;
-            set
-            {
-                searchQuery = value;
-                OnPropertyChanged(nameof(SearchQuery));
-                ExecuteSearch();
-            }
-        }
-
-        private void ExecuteSearch()
-        {
-            UpdateDisplayedTasks(SearchQuery);
-
-           
-            if (
-                DisplayedLowPriorityTasks.Count == 0
-                && DisplayedMediumPriorityTasks.Count == 0
-                && DisplayedHighPriorityTasks.Count == 0
-                && DisplayedCriticalPriorityTasks.Count == 0
-            )
-            {
-                ClearDisplayedTasks();
-            }
-        }
-
-        private void ExecuteAdd(object parameter)
-        {
-            if (parameter is Page page)
-            {
-                var hostWindow = Window.GetWindow(page);
-                if (hostWindow != null)
+                var model = new Tasks
                 {
-                    var addWindow = new Addtaskwindow { Owner = hostWindow };
-                    addWindow.ShowDialog();
-                    RefreshContent();
-                }
-                else
+                    Id = dto.Id,
+                    Name = dto.Title,
+                    Description = dto.Description,
+                    IsCompleted = dto.IsCompleted,
+                    Priority = (TaskPriority)dto.Priority, // assuming dto.Priority is same enum
+                };
+
+                switch (model.Priority)
                 {
-                    MessageBox.Show(
-                        "Host window not found.",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
+                    case TaskPriority.Low:
+                        DisplayedLowPriorityTasks.Add(model);
+                        break;
+                    case TaskPriority.Medium:
+                        DisplayedMediumPriorityTasks.Add(model);
+                        break;
+                    case TaskPriority.High:
+                        DisplayedHighPriorityTasks.Add(model);
+                        break;
+                    case TaskPriority.Critical:
+                        DisplayedCriticalPriorityTasks.Add(model);
+                        break;
                 }
             }
         }
 
-        private void OpenTaskDetails(object parameter)
+        private void ExecuteSearch() => UpdateDisplayedTasks(SearchQuery);
+
+        private void ExecuteAdd()
         {
-            if (SelectedTask == null)
+            var hostWindow = Application.Current.Windows
+                                .OfType<Window>()
+                                .FirstOrDefault(w => w.IsActive);
+            if (hostWindow == null)
+            {
+                MessageBox.Show("Host window not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
 
-            var detailsWindow = new TaskDetails(selectedTask);
+            var addWindow = new Addtaskwindow { Owner = hostWindow };
+            addWindow.ShowDialog();
+            RefreshContent();
+        }
 
-            detailsWindow.DataContext = new TaskDetailsViewModel(SelectedTask, detailsWindow);
-            detailsWindow.Owner = Window.GetWindow(
-                Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive)
-            );
+        private void OpenTaskDetails()
+        {
+            if (SelectedTask == null) return;
 
+            var taskService = _taskServiceFactory();
+
+            // Convert SelectedTask to TaskDto for TaskDetails
+            var dto = new TaskDto
+            {
+                Id = SelectedTask.Id,
+                Title = SelectedTask.Name, // Use Name if that's the property holding the title
+                Description = SelectedTask.Description,
+                IsCompleted = SelectedTask.IsCompleted,
+                Priority = (Todolist.Services.Data.TaskPriority)(int)SelectedTask.Priority, // Explicit conversion added
+                UserId = SelectedTask.UserId,
+                CompletedAt = SelectedTask.CompletedAt
+            };
+
+            var detailsWindow = new TaskDetails(dto, taskService);
+
+            // Pass a TaskDetailsViewModel that uses the TaskDto, not Tasks
+            detailsWindow.DataContext = new TaskDetailsViewModel(taskService, dto, detailsWindow);
+
+            detailsWindow.Owner = Application.Current.Windows
+                                 .OfType<Window>()
+                                 .FirstOrDefault(w => w.IsActive);
             detailsWindow.ShowDialog();
             RefreshContent();
         }
 
-
-        public void OpenHistory(object parameter)
+        public void OpenHistory()
         {
-            if (parameter is Page page)
-            {
-                page.NavigationService.Navigate(new Historypage());
-            }
+            var mainFrame = Application.Current.MainWindow
+                              .FindName("MainFrame") as System.Windows.Controls.Frame;
+            mainFrame?.Navigate(new Historypage());
         }
 
-        private void ExecuteLogout(object parameter)
+        private void ExecuteLogout()
         {
             CurrentUser.Clear();
-
-            if (Application.Current.MainWindow is Mainwindow main && main.MainFrame != null)
+            var main = Application.Current.MainWindow as Mainwindow;
+            if (main?.MainFrame != null)
             {
-                var nav = main.MainFrame.NavigationService;
-                while (nav.RemoveBackEntry() != null) { }
-                main.MainFrame.Content = new LoginPage();
-            }
-            else if (parameter is Page page && page.NavigationService != null)
-            {
-                var nav = page.NavigationService;
-                while (nav.RemoveBackEntry() != null) { }
-                var frame = Window.GetWindow(page)?.FindName("MainFrame") as Frame;
-                frame?.Navigate(new LoginPage());
+                while (main.MainFrame.RemoveBackEntry() != null) { }
+                main.MainFrame.Navigate(new LoginPage(_userService));
             }
         }
     }

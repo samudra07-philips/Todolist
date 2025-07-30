@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
-using todolist_mvvm.Data;
-using todolist_mvvm.view;
-using todolist_mvvm.model;
+using Todolist.Services;   // for IUserService, LoginRequest, LoginResponse
 using todolist_mvvm.Bussiness_Layer;
-namespace todolist_mvvm.viewmodel
+using todolist_mvvm.model;
+using todolist_mvvm.view;
 
+namespace todolist_mvvm.viewmodel
 {
     public class LoginPageViewModel : BaseViewModel
     {
+        private readonly IUserService _userService;
+
         private string _username;
         private string _password;
 
@@ -25,7 +25,7 @@ namespace todolist_mvvm.viewmodel
                 {
                     _username = value;
                     OnPropertyChanged(nameof(Username));
-                    LoginCommand.RaiseCanExecuteChanged();
+                    LoginCommand?.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -39,67 +39,57 @@ namespace todolist_mvvm.viewmodel
                 {
                     _password = value;
                     OnPropertyChanged(nameof(Password));
-                    LoginCommand.RaiseCanExecuteChanged();
+                    LoginCommand?.RaiseCanExecuteChanged();
                 }
             }
         }
-
-        public RelayCommand LoginCommand { get; }
-        public RelayCommand SignUpCommand { get; }
 
         public LoginPageViewModel()
         {
+            
+        }
+        public RelayCommand LoginCommand { get; }
+        public RelayCommand SignUpCommand { get; }
+
+        // Constructor now takes IUserService via DI
+        public LoginPageViewModel(IUserService userService)
+        {
             LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin);
             SignUpCommand = new RelayCommand(ExecuteSignUp);
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        private bool CanExecuteLogin(object parameter)
-        {
-            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
-        }
+        private bool CanExecuteLogin(object parameter) =>
+            !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
 
         private void ExecuteLogin(object parameter)
         {
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            int CurrentId;
+            try
             {
-                MessageBox.Show(
-                    "Invalid Credentials! Please fill in all fields.",
-                    "Error",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                CurrentId = _userService.Login(Username, Password);
+
+                ((IClientChannel)_userService).Close();
+            }
+            catch (Exception ex)
+            {
+                ((IClientChannel)_userService).Abort();
+                MessageBox.Show($"Service error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            using (var context = new AppDbContext())
+            if (CurrentId==0)
             {
-           
-                string passwordHash = HashPassword(Password);
-
-                var user = context.Users.FirstOrDefault(u =>
-                    u.Username == Username && u.PasswordHash == passwordHash
-                );
-
-                if (user == null)
-                {
-                    MessageBox.Show(
-                        "Invalid username or password!",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-                    return;
-                }
-                CurrentUser.SetUser(user.Id, user.Username);
-                //Console.WriteLine(user.Username);
+                MessageBox.Show("Invalid username or password!", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+            else CurrentUser.SetUser(CurrentId, Username); //need to be checked later
 
-            
             if (parameter is Page page)
             {
-               
                 page.NavigationService.Navigate(new Todo());
             }
+
         }
 
         private void ExecuteSignUp(object parameter)
@@ -108,17 +98,7 @@ namespace todolist_mvvm.viewmodel
             {
                 Username = string.Empty;
                 Password = string.Empty;
-                page.NavigationService.Navigate(new Signup());
-            }
-        }
-
-        private string HashPassword(string password)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(password);
-                var hash = sha256.ComputeHash(bytes);
-                return Convert.ToBase64String(hash);
+                page.NavigationService.Navigate(new Signup(_userService)); // Pass the required IUserService instance
             }
         }
     }

@@ -84,6 +84,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="todolist.Service">
+      <HintPath>..\todolist.Service\bin\Debug\todolist.Service.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Abstractions, Version=5.11.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.Abstractions.5.11.7\lib\net48\Unity.Abstractions.dll</HintPath>
     </Reference>
@@ -107,24 +110,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bussiness Layer\CurrentUser.cs" />
-    <Compile Include="Bussiness Layer\Helpers\PasswordBoxHelper.cs" />
-    <Compile Include="Bussiness Layer\Helpers\PasswordHasher.cs" />
     <Compile Include="Bussiness Layer\Interfaces\Irefreshinterface.cs" />
-    <Compile Include="Data\AppDbContext.cs" />
-    <Compile Include="Data\UserRepository.cs" />
-    <Compile Include="Migrations\202506180750165_InitialCreate.cs" />
-    <Compile Include="Migrations\202506180750165_InitialCreate.Designer.cs">
-      <DependentUpon>202506180750165_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202506181837214_AddUserTasksRelationship.cs" />
-    <Compile Include="Migrations\202506181837214_AddUserTasksRelationship.Designer.cs">
-      <DependentUpon>202506181837214_AddUserTasksRelationship.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202506190959466_AddCompletionFieldsToTasks.cs" />
-    <Compile Include="Migrations\202506190959466_AddCompletionFieldsToTasks.Designer.cs">
-      <DependentUpon>202506190959466_AddCompletionFieldsToTasks.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Bussiness Layer\TaskMapper.cs" />
     <Compile Include="model\Task.cs" />
     <Compile Include="model\User.cs" />
     <Compile Include="viewmodel\AddTaskWindowViewModel.cs" />
@@ -154,6 +141,7 @@
     <Compile Include="view\Todo.xaml.cs">
       <DependentUpon>Todo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpfUnityconfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="view\mainwindow.xaml.cs">
@@ -172,15 +160,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202506180750165_InitialCreate.resx">
-      <DependentUpon>202506180750165_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202506181837214_AddUserTasksRelationship.resx">
-      <DependentUpon>202506181837214_AddUserTasksRelationship.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202506190959466_AddCompletionFieldsToTasks.resx">
-      <DependentUpon>202506190959466_AddCompletionFieldsToTasks.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
