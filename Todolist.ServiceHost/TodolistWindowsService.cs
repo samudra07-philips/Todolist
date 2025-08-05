@@ -17,20 +17,33 @@ namespace Todolist.ServiceHost
 
         protected override void OnStart(string[] args)
         {
-            
-            Database.SetInitializer(
-                new MigrateDatabaseToLatestVersion<AppDbContext, Todolist.Service.Migrations.Configuration>());
+            try
+            {
+                // Set EF initializer to migrate or create DB/tables as needed
+                Database.SetInitializer(
+                    new MigrateDatabaseToLatestVersion<AppDbContext, Todolist.Service.Migrations.Configuration>());
 
-            using (var ctx = new AppDbContext())
-                ctx.Database.Initialize(force: true);
+                using (var ctx = new AppDbContext())
+                {
+                    ctx.Database.Initialize(force: true);
+                }
 
-           
-            var container = new UnityContainer();
-            UnityConfig.RegisterComponents(container);
+                var container = new UnityContainer();
+                UnityConfig.RegisterComponents(container);
 
-          
-            StartServiceHost<UserService, IUserService>(container, "http://localhost:8000/UserService");
-            StartServiceHost<TaskService, ITaskService>(container, "http://localhost:8001/TaskService");
+                StartServiceHost<UserService, IUserService>(container, "http://localhost:8000/UserService");
+                StartServiceHost<TaskService, ITaskService>(container, "http://localhost:8001/TaskService");
+            }
+            catch (Exception ex)
+            {
+                // Log to Event Viewer or a file
+                System.Diagnostics.EventLog.WriteEntry(
+                    "TodolistWindowsService",
+                    $"Database initialization failed: {ex.Message}\n{ex.StackTrace}",
+                    System.Diagnostics.EventLogEntryType.Error);
+
+                throw; // Optionally rethrow to stop the service
+            }
         }
 
         private void StartServiceHost<TService, TContract>(IUnityContainer container, string baseAddress)
